@@ -5,13 +5,13 @@
       <h2 class="subtitle">Elijan sus personajes</h2>
       <div class="characters-container">
         <div class="character">
-          <img alt="character" src="../../assets/mage hero.png" />
+          <img alt="character" src="../assets/characters/mage-hero.png" />
         </div>
         <div class="character">
-          <img alt="character" src="../../assets/mage hero.png" />
+          <img alt="character" src="../assets/characters/mage-hero.png" />
         </div>
         <div class="character">
-          <img alt="character" src="../../assets/mage hero.png" />
+          <img alt="character" src="../assets/characters/mage-hero.png" />
         </div>
       </div>
     </section>
@@ -29,10 +29,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+  name: 'CharactersSelection'
 }
 </script>
 
@@ -40,18 +37,19 @@ export default {
   .screen {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    color: white;
   }
 
   .title {
+    font-family: Flipps;
     font-size: 40px;
-    margin: 5px
+    margin: 5px;
+    color: rgba(249, 255, 76, 0.55);
   }
 
   .subtitle {
-    font-size: 30px;
-    margin: 2px
+    font-size: 20px;
+    margin: 2px;
+    color: rgba(249, 255, 76, 0.55);
   }
 
   .characters-selection {
@@ -61,7 +59,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: grey;
+    background: #545b61;
   }
 
   .characters-container {
@@ -86,12 +84,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
   }
 
   .description {
     flex: 2;
     padding: 10px;
     color: white;
+    font-family: PressStart;
+    font-size: 12px;
   }
 
   .start {
