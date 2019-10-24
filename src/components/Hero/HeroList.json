@@ -1,0 +1,31 @@
+{
+    "Hero1": {
+      "name": "Mage",
+      "image": "Placeholder",
+      "max_health": 100,
+      "health": 100,
+      "damage": 90,
+      "statusEffects": "",
+      "healing": 22
+    },
+
+    "Hero2": {
+        "name": "Knight",
+        "image": "Placeholder",
+        "max_health": 185,
+        "health": 185,
+        "damage": 40,
+        "statusEffects": "",
+        "healing": 30
+    },
+
+    "Hero3": {
+        "name": "Ranger",
+        "image": "Placeholder",
+        "max_health": 125,
+        "health": 125,
+        "damage": 50,
+        "statusEffects": "",
+        "healing": 15
+    }
+}    
