@@ -1,0 +1,51 @@
+{
+    "Mofo1": {
+      "name": "Caustic Slime",
+      "image": "Placeholder",
+      "max_health": 430,
+      "health": 430,
+      "damage": 15,
+      "statusEffects": "",
+      "healing": 0
+    },
+    
+    "Mofo2": {
+        "name": "Fishlet",
+        "image": "Placeholder",
+        "max_health": 800,
+        "health": 800,
+        "damage": 20,
+        "statusEffects": "",
+        "healing": 5
+    },
+
+    "Mofo3": {
+        "name": "William O. Wisp",
+        "image": "Placeholder",
+        "max_health": 1,
+        "health": 1,
+        "damage": 100,
+        "statusEffects": "",
+        "healing": 0
+    },
+
+    "Mofo4": {
+        "name": "Hand-Holder",
+        "image": "Placeholder",
+        "max_health": 657,
+        "health": 657,
+        "damage": 66,
+        "statusEffects": "",
+        "healing": 40
+    },
+
+    "MofoFinal": {
+        "name": "Final ACTor",
+        "image": "Placeholder",
+        "max_health": 1337,
+        "health": 1337,
+        "damage": 100,
+        "statusEffects": "",
+        "healing": 0
+    }
+}    
