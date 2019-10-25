@@ -11,5 +11,7 @@
 </template>
 
 <script>
-    <!-- TODO -->
+  export default {
+    name: 'Boss'
+  }
 </script>
