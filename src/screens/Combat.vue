@@ -25,7 +25,7 @@
     <footer class="footer">
       <aside class="actions-area">
         <div class="buttons-container">
-          <Button label="Ataque" />
+          <Button label="Ataque" v-on:click="ataque"/>
           <Button label="Curación" />
           <Button label="Acción especial" />
         </div>
@@ -45,6 +45,12 @@
 <script>
 import Button from '../components/Button.vue'
 import StatusBar from "../components/StatusBar";
+
+methods:{
+  ataque:function(){
+    this.StatusBar.status = "100/100"
+  }
+}
 
 export default {
   name: 'Combat',
