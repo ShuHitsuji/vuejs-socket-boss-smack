@@ -34,7 +34,7 @@
         <StatusBar label="Player 1" status="90/100" color="#5a5adc" />
         <StatusBar label="Player 2" status="75/100" color="#5a5adc" />
         <StatusBar label="Player 3" status="67/100" color="#5a5adc" />
-        <StatusBar label="Player 4" status="230/400" color="red" />
+        <StatusBar label="Boss" status="230/400" color="red" />
       </main>
       <nav class="bard-area">
       </nav>
