@@ -4,19 +4,32 @@
       <label class="character">{{ label }}</label>
     </div>
     <div class="bars-column">
-      <div class="bar" :style="{background: color}"></div>
-      <div class="bar" :style="{background: color, width: '240px'}"></div>
+      <Bar :color="colors.health" :percentage="status.health.current / status.health.max * 100"></Bar>
+      <Bar v-if="hasMana" :color="colors.mana" :percentage="getMana"></Bar>
     </div>
     <div class="status-column">
-      <label class="status">{{ status }}</label>
+      <label class="status">{{ status.health.current }}/{{ status.health.max }}</label>
     </div>
   </div>
 </template>
 
 <script>
+  import Bar from './Bar.vue'
+
   export default {
     name: 'StatusBar',
-    props: ['label', 'status', 'color']
+    props: ['label', 'status', 'colors'],
+    components: {
+      Bar
+    },
+    computed: {
+      hasMana: function () {
+        return typeof this.status.mana !== 'undefined'
+      },
+      getMana: function () {
+        return this.status.mana ? this.status.mana.current / this.status.mana.max * 100 : null
+      },
+    }
   }
 </script>
 
@@ -38,11 +51,6 @@
     display: flex;
     flex-direction: column;
     width: 200px;
-  }
-
-  .bar {
-    height: 10px;
-    margin: 1px;
   }
 
   .status-column {

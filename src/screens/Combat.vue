@@ -31,10 +31,16 @@
         </div>
       </aside>
       <main class="status-area">
-        <StatusBar label="Player 1" status="90/100" color="#5a5adc" />
-        <StatusBar label="Player 2" status="75/100" color="#5a5adc" />
-        <StatusBar label="Player 3" status="67/100" color="#5a5adc" />
-        <StatusBar label="Boss" status="230/400" color="red" />
+        <StatusBar v-for="player in players"
+                   :key="player.name"
+                   :label="player.name"
+                   :status="{ health: player.health, mana: player.mana }"
+                   :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
+        />
+        <StatusBar label="Boss"
+                   :status="{ health: { max: 500, current: 500 } }"
+                   :colors="{ health: 'red' }"
+        />
       </main>
       <nav class="bard-area">
       </nav>
@@ -45,9 +51,34 @@
 <script>
 import Button from '../components/Button.vue'
 import StatusBar from "../components/StatusBar";
+import Player from '../entities/Player'
 
 export default {
   name: 'Combat',
+  data: () => {
+    return {
+      players: [
+        new Player({
+          name: 'Guille',
+          health: 150,
+          mana: 60,
+          attack: 60
+        }),
+        new Player({
+          name: 'Francho',
+          health: 200,
+          mana: 30,
+          attack: 35
+        }),
+        new Player({
+          name: 'Axel',
+          health: 100,
+          mana: 100,
+          attack: 80
+        })
+      ]
+    }
+  },
   components: {
     StatusBar,
     Button
