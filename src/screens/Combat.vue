@@ -24,17 +24,19 @@
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <div class="buttons-container">
-          <Button label="Ataque" />
-          <Button label="Curación" />
-          <Button label="Acción especial" />
-        </div>
+        <ButtonsPanel />
       </aside>
       <main class="status-area">
-        <StatusBar label="Player 1" status="90/100" color="#5a5adc" />
-        <StatusBar label="Player 2" status="75/100" color="#5a5adc" />
-        <StatusBar label="Player 3" status="67/100" color="#5a5adc" />
-        <StatusBar label="Boss" status="230/400" color="red" />
+        <StatusBar v-for="player in players"
+                   :key="player.name"
+                   :label="player.name"
+                   :status="{ health: player.health, mana: player.mana }"
+                   :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
+        />
+        <StatusBar label="Boss"
+                   :status="{ health: { max: 500, current: 500 } }"
+                   :colors="{ health: 'red' }"
+        />
       </main>
       <nav class="bard-area">
       </nav>
@@ -43,14 +45,42 @@
 </template>
 
 <script>
-import Button from '../components/Button.vue'
 import StatusBar from "../components/StatusBar";
+import Player from '../entities/Player'
+import ButtonsPanel from '../components/ButtonsPanel'
 
 export default {
   name: 'Combat',
+  data: () => {
+    return {
+      players: [
+        new Player({
+          name: 'Guille',
+          type: 'ranger',
+          health: 150,
+          mana: 60,
+          attack: 60
+        }),
+        new Player({
+          name: 'Francho',
+          type: 'warrior',
+          health: 200,
+          mana: 30,
+          attack: 35
+        }),
+        new Player({
+          name: 'Axel',
+          type: 'mage',
+          health: 100,
+          mana: 100,
+          attack: 80
+        })
+      ]
+    }
+  },
   components: {
     StatusBar,
-    Button
+    ButtonsPanel
   }
 }
 </script>
@@ -101,16 +131,6 @@ export default {
     background: #333;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .buttons-container {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 10px;
   }
 
   .status-area {
