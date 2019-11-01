@@ -4,21 +4,21 @@
       <div class="players-area">
         <div class="column left">
           <div class="character">
-            <img alt="character" src="../assets/characters/mage-hero.png" />
+            <img class="character-img" alt="character" src="../assets/characters/mage-hero.png" />
           </div>
         </div>
         <div class="column right">
           <div class="character">
-            <img alt="character" src="../assets/characters/mage-hero-healing.png" />
+            <img class="character-img" alt="character" src="../assets/characters/knight.png" />
           </div>
           <div class="character">
-            <img alt="character" src="../assets/characters/mage-hero-damaged.png" />
+            <img class="character-img" alt="character" src="../assets/characters/mage-hero-damaged.png" />
           </div>
         </div>
       </div>
       <div class="monster-area">
         <div class="monster">
-          <img alt="boss" src="../assets/characters/Boss-nr1.png" />
+          <img class="boss-img" alt="boss" src="../assets/characters/spectre base.png" />
         </div>
       </div>
     </section>
@@ -156,5 +156,15 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .character-img {
+    width:77px;
+    height:77px;
+  }
+
+  .boss-img {
+    width:96px;
+    height:96px;
   }
 </style>
