@@ -9,7 +9,7 @@
         </div>
         <div class="column right">
           <div class="character">
-            <img class="character-img" alt="character" src="../assets/characters/knight.png" />
+            <img class="knight-img" alt="character" src="../assets/characters/knight.png" />
           </div>
           <div class="character">
             <img class="character-img" alt="character" src="../assets/characters/mage-hero-damaged.png" />
@@ -163,8 +163,13 @@ export default {
     height:77px;
   }
 
+  .knight-img {
+    width:90px;
+    height:90px;
+  }
+
   .boss-img {
-    width:96px;
-    height:96px;
+    width:128px;
+    height:128px;
   }
 </style>
