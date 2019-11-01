@@ -24,11 +24,7 @@
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <div class="buttons-container">
-          <Button label="Ataque" />
-          <Button label="Curación" />
-          <Button label="Acción especial" />
-        </div>
+        <ButtonsPanel />
       </aside>
       <main class="status-area">
         <StatusBar v-for="player in players"
@@ -49,9 +45,9 @@
 </template>
 
 <script>
-import Button from '../components/Button.vue'
 import StatusBar from "../components/StatusBar";
 import Player from '../entities/Player'
+import ButtonsPanel from '../components/ButtonsPanel'
 
 export default {
   name: 'Combat',
@@ -81,7 +77,7 @@ export default {
   },
   components: {
     StatusBar,
-    Button
+    ButtonsPanel
   }
 }
 </script>
@@ -132,16 +128,6 @@ export default {
     background: #333;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .buttons-container {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 10px;
   }
 
   .status-area {
