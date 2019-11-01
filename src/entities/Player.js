@@ -1,11 +1,14 @@
 const types = {
   ranger: {
+    name: "Ranger",
     img: "mage-hero.png"
   },
-  warrior: {
-    img: "mage-hero.png"
+  knight: {
+    name: "Knight",
+    img: "knight.png"
   },
   mage: {
+    name: "Mage",
     img: "mage-hero.png"
   }
 }
@@ -13,7 +16,10 @@ const types = {
 class Player {
   constructor({ name, type, health, attack, mana}) {
     this.name = name;
-    this.type = types[type]
+    this.type = {
+      keyName: type,
+      ...types[type]
+    }
     this.health = {
       max: health,
       current: health

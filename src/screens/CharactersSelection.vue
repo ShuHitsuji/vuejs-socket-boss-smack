@@ -5,13 +5,13 @@
       <h2 class="subtitle">Elijan sus personajes</h2>
       <div class="characters-container">
         <div class="character">
-          <img alt="character" src="../assets/characters/mage-hero.png" />
+          <Hero :instance="heroes[0]" />
         </div>
         <div class="character">
-          <img alt="character" src="../assets/characters/mage-hero.png" />
+          <Hero :instance="heroes[1]" />
         </div>
         <div class="character">
-          <img alt="character" src="../assets/characters/mage-hero.png" />
+          <Hero :instance="heroes[2]" />
         </div>
       </div>
     </section>
@@ -28,8 +28,43 @@
 </template>
 
 <script>
+import Hero from "../components/Hero/Hero";
+import Player from '../entities/Player'
+
+const heroes = [
+  new Player({
+    name: 'Guille',
+    type: 'ranger',
+    health: 150,
+    mana: 60,
+    attack: 60
+  }),
+  new Player({
+    name: 'Francho',
+    type: 'knight',
+    health: 200,
+    mana: 30,
+    attack: 35
+  }),
+  new Player({
+    name: 'Axel',
+    type: 'mage',
+    health: 100,
+    mana: 100,
+    attack: 80
+  })
+]
+
 export default {
-  name: 'CharactersSelection'
+  name: 'CharactersSelection',
+  data: () => {
+    return {
+      heroes
+    }
+  },
+  components: {
+    Hero
+  }
 }
 </script>
 

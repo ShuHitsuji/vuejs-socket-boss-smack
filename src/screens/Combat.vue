@@ -4,21 +4,21 @@
       <div class="players-area">
         <div class="column left">
           <div class="character">
-            <img class="character-img" alt="character" src="../assets/characters/mage-hero.png" />
+            <Hero :instance="heroes[0]" />
           </div>
         </div>
         <div class="column right">
           <div class="character">
-            <img class="knight-img" alt="character" src="../assets/characters/knight.png" />
+            <Hero :instance="heroes[1]" />
           </div>
           <div class="character">
-            <img class="character-img" alt="character" src="../assets/characters/mage-hero-damaged.png" />
+            <Hero :instance="heroes[2]" />
           </div>
         </div>
       </div>
       <div class="monster-area">
         <div class="monster">
-          <img class="boss-img" alt="boss" src="../assets/characters/spectre base.png" />
+         <Boss />
         </div>
       </div>
     </section>
@@ -27,10 +27,10 @@
         <ButtonsPanel v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial" />
       </aside>
       <main class="status-area">
-        <StatusBar v-for="player in players"
-                   :key="player.name"
-                   :label="player.name"
-                   :status="{ health: player.health, mana: player.mana }"
+        <StatusBar v-for="hero in heroes"
+                   :key="hero.name"
+                   :label="hero.name"
+                   :status="{ health: hero.health, mana: hero.mana }"
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
         />
         <StatusBar label="Boss"
@@ -49,34 +49,39 @@
 import StatusBar from "../components/StatusBar";
 import Player from '../entities/Player'
 import ButtonsPanel from '../components/ButtonsPanel'
+import Hero from "../components/Hero/Hero";
+import Boss from "../components/Boss/Boss";
+
+const heroes = [
+  new Player({
+    name: 'Guille',
+    type: 'ranger',
+    health: 150,
+    mana: 60,
+    attack: 60
+  }),
+  new Player({
+    name: 'Francho',
+    type: 'knight',
+    health: 200,
+    mana: 30,
+    attack: 35
+  }),
+  new Player({
+    name: 'Axel',
+    type: 'mage',
+    health: 100,
+    mana: 100,
+    attack: 80
+  })
+]
 
 export default {
   name: 'Combat',
   data: () => {
     return {
-      players: [
-        new Player({
-          name: 'Guille',
-          type: 'ranger',
-          health: 150,
-          mana: 60,
-          attack: 60
-        }),
-        new Player({
-          name: 'Francho',
-          type: 'warrior',
-          health: 200,
-          mana: 30,
-          attack: 35
-        }),
-        new Player({
-          name: 'Axel',
-          type: 'mage',
-          health: 100,
-          mana: 100,
-          attack: 80
-        })
-      ],
+      heroes,
+      currentPlayer: heroes[0],
       lastAction: ""
     }
   },
@@ -92,6 +97,8 @@ export default {
     }
   },
   components: {
+    Hero,
+    Boss,
     StatusBar,
     ButtonsPanel
   }
@@ -156,20 +163,5 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .character-img {
-    width:77px;
-    height:77px;
-  }
-
-  .knight-img {
-    width:90px;
-    height:90px;
-  }
-
-  .boss-img {
-    width:128px;
-    height:128px;
   }
 </style>
