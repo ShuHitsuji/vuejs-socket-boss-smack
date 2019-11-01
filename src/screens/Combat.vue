@@ -56,18 +56,21 @@ export default {
       players: [
         new Player({
           name: 'Guille',
+          type: 'ranger',
           health: 150,
           mana: 60,
           attack: 60
         }),
         new Player({
           name: 'Francho',
+          type: 'warrior',
           health: 200,
           mana: 30,
           attack: 35
         }),
         new Player({
           name: 'Axel',
+          type: 'mage',
           health: 100,
           mana: 100,
           attack: 80

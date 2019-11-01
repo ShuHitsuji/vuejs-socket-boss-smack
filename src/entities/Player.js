@@ -1,7 +1,19 @@
-class Player {
-  constructor({ name, health, attack, mana}) {
-    this.name = name;
+const types = {
+  ranger: {
+    img: "mage-hero.png"
+  },
+  warrior: {
+    img: "mage-hero.png"
+  },
+  mage: {
+    img: "mage-hero.png"
+  }
+}
 
+class Player {
+  constructor({ name, type, health, attack, mana}) {
+    this.name = name;
+    this.type = types[type]
     this.health = {
       max: health,
       current: health
