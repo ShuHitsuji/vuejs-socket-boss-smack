@@ -24,7 +24,7 @@
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <ButtonsPanel />
+        <ButtonsPanel v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial" />
       </aside>
       <main class="status-area">
         <StatusBar v-for="player in players"
@@ -39,6 +39,7 @@
         />
       </main>
       <nav class="bard-area">
+        {{ lastAction }}
       </nav>
     </footer>
   </div>
@@ -75,7 +76,19 @@ export default {
           mana: 100,
           attack: 80
         })
-      ]
+      ],
+      lastAction: ""
+    }
+  },
+  methods: {
+    playerAttacks: function () {
+      this.lastAction = "Current player attacks"
+    },
+    playerHeals: function () {
+      this.lastAction = "Current player heal"
+    },
+    playerDoSomethingSpecial: function () {
+      this.lastAction = "Current player do somethings special"
     }
   },
   components: {

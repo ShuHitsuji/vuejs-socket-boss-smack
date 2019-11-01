@@ -13,14 +13,14 @@
     name: 'ButtonsPanel',
     methods: {
       onAttack: function() {
-        console.log("ataque")
+        this.$emit('attack')
       },
       onHeal: function() {
-        console.log("heal")
+        this.$emit('heal')
       },
       onSpecialAction: function() {
-        console.log("special")
-      },
+        this.$emit('special')
+      }
     },
     components: {
       Button
