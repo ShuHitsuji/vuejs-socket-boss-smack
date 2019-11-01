@@ -8,9 +8,9 @@
 <!--      <img v-show="currentHeroState == 'Hurt'" src="Placeholder">-->
 <!--    </div>-->
 <!--  </div>-->
-  <img class="boss-img" alt="boss"
-       :src="`${publicPath}/${heroImage}`"
-  />
+  <img :class="[heroClass]"
+       alt="character"
+       :src="`${publicPath}/${heroImage}`" />
 </template>
 
 <script>
