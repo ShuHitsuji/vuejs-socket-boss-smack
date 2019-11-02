@@ -27,7 +27,7 @@
 </script>
 
 
-<style>
+<style scoped>
   .boss {
     width:128px;
     height:128px;

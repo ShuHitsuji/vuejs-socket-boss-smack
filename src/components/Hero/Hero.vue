@@ -8,14 +8,17 @@
 <!--      <img v-show="currentHeroState == 'Hurt'" src="Placeholder">-->
 <!--    </div>-->
 <!--  </div>-->
-  <img :class="[heroClass]"
-       alt="character"
-       :src="`${publicPath}/${heroImage}`" />
+  <div class="container">
+    <div :class="{arrow: selected}"></div>
+    <img :class="[heroClass]"
+         alt="character"
+         :src="`${publicPath}/${heroImage}`" />
+  </div>
 </template>
 
 <script>
   export default {
-    props: ['instance'],
+    props: ['instance', 'selected'],
     data() {
       return {
         publicPath: process.env.BASE_URL + 'assets/characters',
@@ -29,7 +32,14 @@
   }
 </script>
 
-<style>
+<style scoped>
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
   .mage,
   .ranger {
     width:77px;
@@ -39,5 +49,16 @@
   .knight {
     width:90px;
     height:90px;
+  }
+
+  .arrow {
+    width: 0px;
+    height: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #b9b9b9;
+    position: absolute;
+    top: -17px;
+    left: 5px;
   }
 </style>

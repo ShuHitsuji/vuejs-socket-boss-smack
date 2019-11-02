@@ -4,30 +4,30 @@
       <div class="players-area">
         <div class="column left">
           <div class="character">
-            <Hero :instance="heroes[0]" />
+            <Hero :instance="players[0]" :selected="isSelected(0)" />
           </div>
         </div>
         <div class="column right">
           <div class="character">
-            <Hero :instance="heroes[1]" />
+            <Hero :instance="players[1]" :selected="isSelected(1)" />
           </div>
           <div class="character">
-            <Hero :instance="heroes[2]" />
+            <Hero :instance="players[2]" :selected="isSelected(2)" />
           </div>
         </div>
       </div>
       <div class="monster-area">
         <div class="monster">
-         <Boss />
+          <Boss/>
         </div>
       </div>
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <ButtonsPanel v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial" />
+        <ButtonsPanel v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
-        <StatusBar v-for="hero in heroes"
+        <StatusBar v-for="hero in players"
                    :key="hero.name"
                    :label="hero.name"
                    :status="{ health: hero.health, mana: hero.mana }"
@@ -38,71 +38,83 @@
                    :colors="{ health: 'red' }"
         />
       </main>
-      <nav class="bard-area">
-        {{ lastAction }}
-      </nav>
+      <div class="bard-area">
+        <p>{{ lastAction }}</p>
+      </div>
     </footer>
   </div>
 </template>
 
 <script>
-import StatusBar from "../components/StatusBar";
-import Player from '../entities/Player'
-import ButtonsPanel from '../components/ButtonsPanel'
-import Hero from "../components/Hero/Hero";
-import Boss from "../components/Boss/Boss";
+  import StatusBar from "../components/StatusBar";
+  import Player from '../entities/Player'
+  import ButtonsPanel from '../components/ButtonsPanel'
+  import Hero from "../components/Hero/Hero";
+  import Boss from "../components/Boss/Boss";
 
-const heroes = [
-  new Player({
-    name: 'Guille',
-    type: 'ranger',
-    health: 150,
-    mana: 60,
-    attack: 60
-  }),
-  new Player({
-    name: 'Francho',
-    type: 'knight',
-    health: 200,
-    mana: 30,
-    attack: 35
-  }),
-  new Player({
-    name: 'Axel',
-    type: 'mage',
-    health: 100,
-    mana: 100,
-    attack: 80
-  })
-]
+  const players = [
+    new Player({
+      name: 'Guille',
+      type: 'ranger',
+      health: 150,
+      mana: 60,
+      attack: 60
+    }),
+    new Player({
+      name: 'Francho',
+      type: 'knight',
+      health: 200,
+      mana: 30,
+      attack: 35
+    }),
+    new Player({
+      name: 'Axel',
+      type: 'mage',
+      health: 100,
+      mana: 100,
+      attack: 80
+    })
+  ]
 
-export default {
-  name: 'Combat',
-  data: () => {
-    return {
-      heroes,
-      currentPlayer: heroes[0],
-      lastAction: ""
-    }
-  },
-  methods: {
-    playerAttacks: function () {
-      this.lastAction = "Current player attacks"
+  export default {
+    name: 'Combat',
+    data: () => {
+      return {
+        players,
+        currentPlayer: 0,
+        lastAction: ""
+      }
     },
-    playerHeals: function () {
-      this.lastAction = "Current player heal"
+    methods: {
+      playerAttacks() {
+        this.lastAction = `${this.getCurrentPlayer().name} attacks`;
+        this.nextTurn();
+      },
+      playerHeals() {
+        this.lastAction = `${this.getCurrentPlayer().name} heals`
+        this.nextTurn();
+      },
+      playerDoSomethingSpecial() {
+        this.lastAction = `${this.getCurrentPlayer().name} does something... special`
+        this.nextTurn();
+      },
+      isSelected(playerId) {
+        return playerId === this.currentPlayer
+      },
+      getCurrentPlayer() {
+        return this.players[this.currentPlayer]
+      },
+      nextTurn() {
+        this.currentPlayer = (++this.currentPlayer) % 3
+      }
     },
-    playerDoSomethingSpecial: function () {
-      this.lastAction = "Current player do somethings special"
+    components: {
+      Hero,
+      Boss,
+      StatusBar,
+      ButtonsPanel
     }
-  },
-  components: {
-    Hero,
-    Boss,
-    StatusBar,
-    ButtonsPanel
   }
-}
 </script>
 
 <style scoped>
@@ -112,7 +124,7 @@ export default {
     color: white;
   }
 
-  .combat-section{
+  .combat-section {
     flex: 1;
     width: 100%;
     display: flex;
@@ -162,6 +174,7 @@ export default {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 0 15px;
   }
 </style>
