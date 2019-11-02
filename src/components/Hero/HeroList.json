@@ -1,12 +1,14 @@
 {
     "Hero1": {
-      "name": "Mage",
+      "name": "Ranger",
       "image": "Placeholder",
-      "max_health": 100,
-      "health": 100,
-      "damage": 90,
+      "max_health": 125,
+      "health": 125,
+      "damage": 50,
+      "max_mana": 60,
+      "mana": 60,
       "statusEffects": "",
-      "healing": 22
+      "healing": 15
     },
 
     "Hero2": {
@@ -15,17 +17,22 @@
         "max_health": 185,
         "health": 185,
         "damage": 40,
+        "max_mana": 30,
+        "mana": 30,
         "statusEffects": "",
         "healing": 30
     },
 
     "Hero3": {
-        "name": "Ranger",
+        "name": "Mage",
         "image": "Placeholder",
-        "max_health": 125,
-        "health": 125,
-        "damage": 50,
+        "max_health": 100,
+        "health": 100,
+        "damage": 90,
+        "max_mana": 120,
+        "mana": 120,
         "statusEffects": "",
-        "healing": 15
+        "healing": 22
+  
     }
 }    
