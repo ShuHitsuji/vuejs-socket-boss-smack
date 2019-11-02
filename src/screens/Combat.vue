@@ -51,6 +51,7 @@ import Player from '../entities/Player'
 import ButtonsPanel from '../components/ButtonsPanel'
 import Hero from "../components/Hero/Hero";
 import Boss from "../components/Boss/Boss";
+import HeroFactory from '../components/HeroFactory';
 
 const heroes = [
   new Player({

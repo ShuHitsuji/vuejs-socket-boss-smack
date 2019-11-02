@@ -3,10 +3,10 @@
     import HeroList from '/Hero/HeroList.json';
 
     export default {
-        name: 'Factory',
+        name: 'HeroFactory',
         props: ['data', 'methods'],
         components: {
-        Factory
+        HeroFactory
         }
     };
     data:{
