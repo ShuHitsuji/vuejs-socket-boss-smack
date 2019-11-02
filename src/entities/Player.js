@@ -1,7 +1,7 @@
 const types = {
   ranger: {
     name: "Ranger",
-    img: "mage-hero.png"
+    img: "ranger.png"
   },
   knight: {
     name: "Knight",
