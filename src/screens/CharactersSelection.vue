@@ -5,18 +5,51 @@
       <h2 class="subtitle">Elijan sus personajes</h2>
       <div class="characters-container">
         <div class="character">
-          <Hero :instance="heroes[0]" />
+          <drop @drop="(player) => handleDrop(player, 'ranger')">
+            <div class="selectors">
+              <div v-for="selector in droppables.ranger"
+                   :key="selector"
+                   class="selector"></div>
+            </div>
+            <Hero :instance="heroes.ranger" />
+          </drop>
         </div>
         <div class="character">
-          <Hero :instance="heroes[1]" />
+          <drop @drop="(player) => handleDrop(player, 'knight')">
+            <div class="selectors">
+              <div v-for="selector in droppables.knight"
+                   :key="selector"
+                   class="selector"></div>
+            </div>
+            <Hero :instance="heroes.knight" />
+          </drop>
         </div>
         <div class="character">
-          <Hero :instance="heroes[2]" />
+          <drop @drop="(player) => handleDrop(player, 'mage')">
+            <div class="selectors">
+              <div v-for="selector in droppables.mage"
+                   :key="selector"
+                   class="selector"></div>
+            </div>
+            <Hero :instance="heroes.mage" />
+          </drop>
         </div>
+      </div>
+      <div class="selectors">
+        <drag v-for="selector in draggables"
+              :key="selector"
+              class="selector"
+              :transfer-data="selector"
+              :effect-allowed="['move']"
+              :image-x-offset="-30"
+              :image-y-offset="180"
+        ></drag>
       </div>
     </section>
     <footer class="footer">
-      <aside class="tutorial">i</aside>
+      <aside class="tutorial">
+        <i>i</i>
+      </aside>
       <main class="description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </main>
@@ -30,40 +63,50 @@
 <script>
 import Hero from "../components/Hero/Hero";
 import Player from '../entities/Player'
+import { Drag, Drop } from 'vue-drag-drop';
 
-const heroes = [
-  new Player({
-    name: 'Guille',
+const heroes = {
+  ranger: new Player({
     type: 'ranger',
     health: 150,
     mana: 60,
     attack: 60
   }),
-  new Player({
-    name: 'Francho',
+  knight: new Player({
     type: 'knight',
     health: 200,
     mana: 30,
     attack: 35
   }),
-  new Player({
-    name: 'Axel',
+  mage: new Player({
     type: 'mage',
     health: 100,
     mana: 100,
     attack: 80
   })
-]
+}
 
 export default {
   name: 'CharactersSelection',
   data: () => {
     return {
-      heroes
+      heroes,
+      draggables: [1, 2, 3],
+      droppables: {
+        ranger: [],
+        knight: [],
+        mage: [],
+      }
     }
   },
+  methods: {
+    handleDrop(player, type) {
+      this.droppables[type].push(player);
+      this.draggables = this.draggables.filter(number => number !== player);
+    },
+  },
   components: {
-    Hero
+    Hero, Drag, Drop
   }
 }
 </script>
@@ -99,12 +142,26 @@ export default {
 
   .characters-container {
     display: flex;
-    align-items: center;
-    flex: 1;
+    align-items: flex-end;
+    min-height: 200px;
   }
 
   .character {
     margin: 20px;
+  }
+
+  .selectors {
+    display: flex;
+    align-items: flex-end;
+    min-height: 60px;
+  }
+
+  .selector {
+    background: #9fa7ad;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    margin: 10px;
   }
 
   .footer {
