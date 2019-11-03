@@ -59,21 +59,21 @@
       type: 'ranger',
       health: 150,
       mana: 100,
-      attack: 30
+      attack: 40
     }),
     new Player({
       name: 'Francho',
       type: 'knight',
       health: 200,
       mana: 100,
-      attack: 20
+      attack: 30
     }),
     new Player({
       name: 'Axel',
       type: 'mage',
       health: 100,
       mana: 100,
-      attack: 40
+      attack: 60
     })
   ]
   const monsters=[
