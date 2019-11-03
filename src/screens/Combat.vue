@@ -34,7 +34,7 @@
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
         />
         <StatusBar label="Boss"
-                   :status="{ health: { max: 500, current: 500 } }"
+                   :status="{ health: monsters[currentMonster].health }"
                    :colors="{ health: 'red' }"
         />
       </main>
@@ -48,6 +48,7 @@
 <script>
   import StatusBar from "../components/StatusBar";
   import Player from '../entities/Player'
+  import Monster from '../entities/Monster'
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
@@ -57,22 +58,34 @@
       name: 'Guille',
       type: 'ranger',
       health: 150,
-      mana: 60,
-      attack: 60
+      mana: 100,
+      attack: 30
     }),
     new Player({
       name: 'Francho',
       type: 'knight',
       health: 200,
-      mana: 30,
-      attack: 35
+      mana: 100,
+      attack: 15
     }),
     new Player({
       name: 'Axel',
       type: 'mage',
       health: 100,
       mana: 100,
-      attack: 80
+      attack: 40
+    })
+  ]
+  const monsters=[
+    new Monster({
+      name: 'Wisp',
+      health: 500,
+      attack: 25
+    }),
+    new Monster({
+      name: 'Slime',
+      health: 1000,
+      attack: 15
     })
   ]
 
@@ -81,21 +94,35 @@
     data: () => {
       return {
         players,
+        monsters,
+        currentMonster: 0,
         currentPlayer: 0,
         lastAction: ""
       }
     },
     methods: {
       playerAttacks() {
-        this.lastAction = `${this.getCurrentPlayer().name} attacks`;
+        if(this.checkAliveStatus()){
+          let playerDamage = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+          this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+          this.getCurrentMonster().health.current -= playerDamage;
+          this.checkWin();
+          this.monsterAttack();
+        }
         this.nextTurn();
       },
       playerHeals() {
-        this.lastAction = `${this.getCurrentPlayer().name} heals`
+        if(this.checkAliveStatus()){
+          let playerHeal = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+
+          this.lastAction = `${this.getCurrentPlayer().name} heals`
+        }
         this.nextTurn();
       },
       playerDoSomethingSpecial() {
-        this.lastAction = `${this.getCurrentPlayer().name} does something... special`
+        if(this.checkAliveStatus()){
+          this.lastAction = `${this.getCurrentPlayer().name} does something... special`
+        }
         this.nextTurn();
       },
       isSelected(playerId) {
@@ -104,9 +131,52 @@
       getCurrentPlayer() {
         return this.players[this.currentPlayer]
       },
+      getCurrentMonster(){
+        return this.monsters[this.currentMonster]
+      },
       nextTurn() {
         this.currentPlayer = (++this.currentPlayer) % 3
-      }
+      },
+      nextMonster(){
+        this.currentMonster = (++this.currentMonster) % monsters.length
+      },
+      monsterAttack(){
+        let monsterDamage = this.calculateDamage(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2)
+        this.getCurrentPlayer().health.current-= monsterDamage;
+        if(this.getCurrentPlayer().health.current < 0){
+          this.getCurrentPlayer().health.current = 0;
+        }
+      },
+      calculateDamage:function(min,max){
+            return Math.max(Math.floor(Math.random()*max)+1,min);
+      },
+      checkAliveStatus(){
+        if(this.getCurrentPlayer().health.current > 1){
+          return true;
+        }else{
+          return false;
+        }
+      },
+      checkAliveParty(){
+        var partyMembers = players.length;
+        for(let i = 0; i < players.length; i++){
+          if(players[i].health.current < 1){
+            partyMembers--;
+          }
+        }
+        if(partyMembers==0){
+          return true;
+        }
+          return false;
+      },
+      checkWin:function(){
+            if(this.getCurrentMonster().health.current <= 0){
+                this.nextMonster();
+            }else if(this.checkAliveParty()){
+                return true;
+            }   
+            return false;
+        },
     },
     components: {
       Hero,
