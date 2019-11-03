@@ -120,11 +120,12 @@
             if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
               this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
               let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
-              this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing}`
+              this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing} hp`
             }else{
               this.getCurrentPlayer().health.current += playerHeal;
-              this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal}`
+              this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
             }
+            this.monsterAttack();
             this.nextTurn();
           }         
         }else{
@@ -132,10 +133,21 @@
         } 
       },
       playerDoSomethingSpecial() {
+        let manaCost = 40;
         if(this.checkAliveStatus()){
-          this.lastAction = `${this.getCurrentPlayer().name} does something... special`
+           if(this.checkMana(manaCost)){
+              this.getCurrentPlayer().mana.current-=manaCost;
+              let playerDamage = this.calculateDamage(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
+              this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+              this.getCurrentMonster().health.current -= playerDamage;
+              this.checkWin();
+              this.monsterAttack();
+              this.nextTurn();
+            }
+        }else{
+          this.nextTurn();
         }
-        this.nextTurn();
+        
       },
       isSelected(playerId) {
         return playerId === this.currentPlayer
