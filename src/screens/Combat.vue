@@ -66,7 +66,7 @@
       type: 'knight',
       health: 200,
       mana: 100,
-      attack: 15
+      attack: 20
     }),
     new Player({
       name: 'Axel',
@@ -112,12 +112,24 @@
         this.nextTurn();
       },
       playerHeals() {
+        let manaCost = 20;
         if(this.checkAliveStatus()){
-          let playerHeal = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
-
-          this.lastAction = `${this.getCurrentPlayer().name} heals`
-        }
-        this.nextTurn();
+          if(this.checkMana(manaCost)){
+            let playerHeal = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+            this.getCurrentPlayer().mana.current-=manaCost;
+            if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
+              this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
+              let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
+              this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing}`
+            }else{
+              this.getCurrentPlayer().health.current += playerHeal;
+              this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal}`
+            }
+            this.nextTurn();
+          }         
+        }else{
+          this.nextTurn();
+        } 
       },
       playerDoSomethingSpecial() {
         if(this.checkAliveStatus()){
@@ -147,7 +159,7 @@
           this.getCurrentPlayer().health.current = 0;
         }
       },
-      calculateDamage:function(min,max){
+      calculateDamage(min,max){
             return Math.max(Math.floor(Math.random()*max)+1,min);
       },
       checkAliveStatus(){
@@ -169,14 +181,22 @@
         }
           return false;
       },
-      checkWin:function(){
-            if(this.getCurrentMonster().health.current <= 0){
-                this.nextMonster();
-            }else if(this.checkAliveParty()){
-                return true;
-            }   
+      checkWin(){
+        if(this.getCurrentMonster().health.current <= 0){
+            this.nextMonster();
+        }else if(this.checkAliveParty()){
+            return true;
+        }   
             return false;
         },
+      checkMana(manaRequiered){
+          if(this.getCurrentPlayer().mana.current < manaRequiered){
+              this.lastAction = `${this.getCurrentPlayer().name} doesn't have enough Mana`
+              return false;
+          }else{
+              return true;
+          }
+        }
     },
     components: {
       Hero,
