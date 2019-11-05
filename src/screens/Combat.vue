@@ -33,7 +33,7 @@
                    :status="{ health: hero.health, mana: hero.mana }"
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
         />
-        <StatusBar label="Boss"
+        <StatusBar :label="monsters[currentMonster].name"
                    :status="{ health: monsters[currentMonster].health }"
                    :colors="{ health: 'red' }"
         />
@@ -79,13 +79,23 @@
   const monsters=[
     new Monster({
       name: 'Wisp',
-      health: 500,
+      health: 200,
       attack: 25
     }),
     new Monster({
-      name: 'Slime',
-      health: 1000,
-      attack: 15
+      name: 'Badass Slime',
+      health: 450,
+      attack: 25
+    }),
+    new Monster({
+      name: 'Fishlett',
+      health: 700,
+      attack: 35
+    }),
+    new Monster({
+      name: 'The hand',
+      health: 900,
+      attack: 40
     })
   ]
 
@@ -103,20 +113,23 @@
     methods: {
       playerAttacks() {
         if(this.checkAliveStatus()){
-          let playerDamage = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+          let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
           this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
           this.getCurrentMonster().health.current -= playerDamage;
+          this.regenMana(10);
           if(!this.checkWin()){
               this.monsterAttack();
           }
+        }else{
+          this.nextTurn();
         }
-        this.nextTurn();
+        
       },
       playerHeals() {
         let manaCost = 20;
         if(this.checkAliveStatus()){
           if(this.checkMana(manaCost)){
-              let playerHeal = this.calculateDamage(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+              let playerHeal = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
               this.getCurrentPlayer().mana.current -= manaCost;
               if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
                 this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
@@ -127,9 +140,9 @@
                 this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
               }
               this.monsterAttack();   
-          }else{
-            this.nextTurn();
           }
+        }else{
+          this.nextTurn();
         }
       },
       playerDoSomethingSpecial() {
@@ -137,7 +150,7 @@
         if(this.checkAliveStatus()){
            if(this.checkMana(manaCost)){
               this.getCurrentPlayer().mana.current -= manaCost;
-              let playerDamage = this.calculateDamage(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
+              let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
               this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
               this.getCurrentMonster().health.current -= playerDamage;
               if(!this.checkWin()){
@@ -168,14 +181,14 @@
           }  
       },
       monsterAttack(){
-          let monsterDamage = this.calculateDamage(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2)
+          let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2)
           this.getCurrentPlayer().health.current -= monsterDamage;
             if(this.getCurrentPlayer().health.current < 0){
               this.getCurrentPlayer().health.current = 0;
             }
           this.nextTurn();  
         },
-      calculateDamage(min,max){
+      calculateRng(min,max){
           return Math.max(Math.floor(Math.random() * max) + 1, min);
       },
       checkAliveStatus(){
@@ -212,6 +225,12 @@
               return false;
           }else{
               return true;
+          }
+        },
+        regenMana(mana){
+          this.getCurrentPlayer().mana.current += mana;
+          if(this.getCurrentPlayer().mana.current > this.getCurrentPlayer().mana.max){
+            this.getCurrentPlayer().mana.current = this.getCurrentPlayer().mana.max;
           }
         }
     },
