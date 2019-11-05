@@ -57,7 +57,7 @@
     new Player({
       name: 'Guille',
       type: 'ranger',
-      health: 150,
+      health: 175,
       mana: 100,
       attack: 40
     }),
@@ -71,7 +71,7 @@
     new Player({
       name: 'Axel',
       type: 'mage',
-      health: 100,
+      health: 150,
       mana: 100,
       attack: 60
     })
@@ -112,7 +112,6 @@
     },
     methods: {
       playerAttacks() {
-        if(this.checkAliveStatus()){
           let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
           this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
           this.getCurrentMonster().health.current -= playerDamage;
@@ -120,14 +119,9 @@
           if(!this.checkWin()){
               this.monsterAttack();
           }
-        }else{
-          this.nextTurn();
-        }
-        
-      },
+        },
       playerHeals() {
         let manaCost = 20;
-        if(this.checkAliveStatus()){
           if(this.checkMana(manaCost)){
               let playerHeal = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
               this.getCurrentPlayer().mana.current -= manaCost;
@@ -141,13 +135,9 @@
               }
               this.monsterAttack();   
           }
-        }else{
-          this.nextTurn();
-        }
       },
       playerDoSomethingSpecial() {
         let manaCost = 40;
-        if(this.checkAliveStatus()){
            if(this.checkMana(manaCost)){
               this.getCurrentPlayer().mana.current -= manaCost;
               let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
@@ -156,10 +146,7 @@
               if(!this.checkWin()){
                 this.monsterAttack();
               }
-            }
-        }else{
-          this.nextTurn();
-        }  
+            }  
       },
       isSelected(playerId) {
         return playerId === this.currentPlayer
@@ -171,28 +158,40 @@
         return this.monsters[this.currentMonster]
       },
       nextTurn() {
+        this.checkWin();
         this.currentPlayer = (++this.currentPlayer) % 3
+        if(!this.checkAliveParty() && !this.checkAliveStatus()){
+          this.nextTurn();
+        }
       },
       nextMonster(){
-        this.currentMonster = (++this.currentMonster) % monsters.length
+        this.currentMonster = ++this.currentMonster;
+        if(this.currentMonster > this.monsters.length){
+          window.location.reload();
+        }
           for(let i = 0; i < players.length; i++){
             players[i].health.current = players[i].health.max;
             players[i].mana.current = players[i].mana.max;
           }  
       },
       monsterAttack(){
-          let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2)
-          this.getCurrentPlayer().health.current -= monsterDamage;
-            if(this.getCurrentPlayer().health.current < 0){
-              this.getCurrentPlayer().health.current = 0;
+          let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
+          let monsterTarget = this.calculateRng(0, players.length);
+          if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
+            this.players[monsterTarget - 1].health.current -= monsterDamage;
+            if(this.players[monsterTarget - 1].health.current < 0){
+              this.players[monsterTarget - 1].health.current = 0;
             }
+          }else if(!this.checkAliveParty()){
+            this.monsterAttack();
+          }
           this.nextTurn();  
         },
       calculateRng(min,max){
           return Math.max(Math.floor(Math.random() * max) + 1, min);
       },
       checkAliveStatus(){
-        if(this.getCurrentPlayer().health.current > 1){
+        if(this.getCurrentPlayer().health.current > 0){
           return true;
         }else{
           return false;
@@ -205,7 +204,7 @@
             partyMembers--;
           }
         }
-        if(partyMembers == 0){
+        if(partyMembers <= 0){
           return true;
         }
           return false;
@@ -215,6 +214,7 @@
             this.nextMonster();
             return true;
         }else if(this.checkAliveParty()){
+            window.location.reload()
             return true;
         }   
             return false;
