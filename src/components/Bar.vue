@@ -13,5 +13,6 @@
     .bar {
         height: 10px;
         margin: 1px;
+        transition: width 500ms;
     }
 </style>
