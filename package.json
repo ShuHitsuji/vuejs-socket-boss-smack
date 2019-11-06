@@ -1,14 +1,18 @@
 {
   "name": "boss-smacker",
   "version": "0.1.0",
+  "homepage": "https://github.com/ShuHitsuji/vuejs-socket-boss-smack",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "gh-pages": "^2.1.1",
     "vue": "^2.6.10",
     "yarn": "^1.19.1"
   },

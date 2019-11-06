@@ -94,8 +94,8 @@
     }),
     new Monster({
       name: 'The hand',
-      health: 900,
-      attack: 40
+      health: 999,
+      attack: 30
     })
   ]
 
