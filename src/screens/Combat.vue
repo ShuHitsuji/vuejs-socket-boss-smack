@@ -55,21 +55,21 @@
 
   const players = [
     new Player({
-      name: 'Guille',
+      name: 'Elf',
       type: 'ranger',
       health: 175,
       mana: 100,
       attack: 40
     }),
     new Player({
-      name: 'Francho',
+      name: 'Knight',
       type: 'knight',
       health: 200,
       mana: 100,
       attack: 30
     }),
     new Player({
-      name: 'Axel',
+      name: 'Old Mage',
       type: 'mage',
       health: 150,
       mana: 100,
@@ -90,7 +90,7 @@
     new Monster({
       name: 'Fishlett',
       health: 700,
-      attack: 35
+      attack: 15
     }),
     new Monster({
       name: 'The hand',
