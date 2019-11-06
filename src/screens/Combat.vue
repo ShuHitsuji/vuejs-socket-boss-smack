@@ -81,25 +81,25 @@
     new Monster({
       name: 'Wisp',
       health: 200,
-      attack: 25,
+      attack: 45,
       type: 'wisp'
     }),
     new Monster({
       name: 'Badass Slime',
-      health: 450,
+      health: 525,
       attack: 25,
       type: 'slime'
     }),
     new Monster({
       name: 'Fishlett',
       health: 700,
-      attack: 15,
+      attack: 20,
       type: 'fish'
     }),
     new Monster({
       name: 'The hand',
       health: 999,
-      attack: 30,
+      attack: 20,
       type: 'tv'
     })
   ]
@@ -129,7 +129,9 @@
       playerHeals() {
         let manaCost = 20;
           if(this.checkMana(manaCost)){
-              let playerHeal = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+              let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
+              let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
+              let playerHeal = this.calculateRng(minHeal, maxHeal);
               this.getCurrentPlayer().mana.current -= manaCost;
               if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
                 this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
