@@ -18,7 +18,7 @@
       </div>
       <div class="monster-area">
         <div class="monster">
-          <Boss/>
+          <Boss :instance="monsters[currentMonster]" />
         </div>
       </div>
     </section>
@@ -80,22 +80,26 @@
     new Monster({
       name: 'Wisp',
       health: 200,
-      attack: 25
+      attack: 25,
+      type: 'wisp'
     }),
     new Monster({
       name: 'Badass Slime',
       health: 450,
-      attack: 25
+      attack: 25,
+      type: 'slime'
     }),
     new Monster({
       name: 'Fishlett',
       health: 700,
-      attack: 15
+      attack: 15,
+      type: 'fish'
     }),
     new Monster({
       name: 'The hand',
       health: 999,
-      attack: 30
+      attack: 30,
+      type: 'tv'
     })
   ]
 
@@ -166,6 +170,7 @@
       },
       nextMonster(){
         this.currentMonster = ++this.currentMonster;
+        this.lastAction = ``;
         if(this.currentMonster > this.monsters.length){
           window.location.reload();
         }

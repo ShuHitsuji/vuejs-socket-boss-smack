@@ -8,10 +8,9 @@
 <!--      <img v-show="currentHeroState == 'Hurt'" src="Placeholder">-->
 <!--    </div>-->
 <!--  </div>-->
-  <img class="boss"
-       alt="monster"
-       :src="`${publicPath}/spectre base.png`"
-  />
+  <img :class="[monsterClass]"
+         alt="boss"
+         :src="`${publicPath}/${monsterImage}`" />
 </template>
 
 <script>
@@ -22,6 +21,10 @@
         publicPath: process.env.BASE_URL + 'assets/characters',
       }
     },
+    computed: {
+      monsterClass: function() { return this.instance.type.keyName },
+      monsterImage: function() { return this.instance.type.img },
+    },
     components: {},
   }
 </script>
@@ -29,6 +32,22 @@
 
 <style scoped>
   .boss {
+    width:128px;
+    height:128px;
+  }
+  .wisp{
+    width:80px;
+    height:80px;
+  }
+  .slime {
+    width:100px;
+    height:100px;
+  }
+  .fish {
+    width:110px;
+    height:110px;
+  }
+  .tv{
     width:128px;
     height:128px;
   }

@@ -1,15 +1,24 @@
 const types = {
   ranger: {
     name: "Ranger",
-    img: "ranger.png"
+    img: "ranger.png",
+    imgIdle: "ranger.png",
+    imgHeal: "ranger-heal.png",
+    imgAttack: "ranger-attack.png"
   },
   knight: {
     name: "Knight",
-    img: "knight.png"
+    img: "knight.png",
+    imgIdle: "knight.png",
+    imgHeal: "knight-heal.png",
+    imgAttack: "ranger-attack.png"
   },
   mage: {
     name: "Mage",
-    img: "mage-hero.png"
+    img: "mage.png",
+    imgIdle: "mage.png",
+    imgHeal: "mage-heal.png",
+    imgAttack: "mage-attack.png"
   }
 }
 
