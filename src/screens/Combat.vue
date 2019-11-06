@@ -40,6 +40,7 @@
       </main>
       <div class="bard-area">
         <p>{{ lastAction }}</p>
+        <p>{{ lastMonsterAction }}</p>
       </div>
     </footer>
   </div>
@@ -111,7 +112,8 @@
         monsters,
         currentMonster: 0,
         currentPlayer: 0,
-        lastAction: ""
+        lastAction: "",
+        lastMonsterAction: ""
       }
     },
     methods: {
@@ -171,6 +173,7 @@
       nextMonster(){
         this.currentMonster = ++this.currentMonster;
         this.lastAction = ``;
+        this.lastMonsterAction = ``;
         if(this.currentMonster > this.monsters.length){
           window.location.reload();
         }
@@ -184,6 +187,7 @@
           let monsterTarget = this.calculateRng(0, players.length);
           if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
             this.players[monsterTarget - 1].health.current -= monsterDamage;
+            this.lastMonsterAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
             if(this.players[monsterTarget - 1].health.current < 0){
               this.players[monsterTarget - 1].health.current = 0;
             }
@@ -227,6 +231,7 @@
       checkMana(manaRequired){
           if(this.getCurrentPlayer().mana.current < manaRequired){
               this.lastAction = `${this.getCurrentPlayer().name} doesn't have enough Mana`
+              this.lastMonsterAction = ``;
               return false;
           }else{
               return true;
@@ -307,5 +312,6 @@
     justify-content: center;
     align-items: flex-start;
     padding: 0 15px;
+    flex-direction: column;
   }
 </style>
