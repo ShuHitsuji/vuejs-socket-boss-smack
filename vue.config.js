@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: '<vuejs-socket-boss-smack>'
+    publicPath: 'vuejs-socket-boss-smack'
   }
