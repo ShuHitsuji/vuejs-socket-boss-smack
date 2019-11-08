@@ -1,3 +1,5 @@
-module.exports = {
-    publicPath: 'vuejs-socket-boss-smack'
+  module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+      ? '/vuejs-socket-boss-smack/'
+      : '/'
   }
