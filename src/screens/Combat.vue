@@ -18,7 +18,7 @@
       </div>
       <div class="monster-area">
         <div class="monster">
-          <Boss :instance="monsters[currentMonster]" />
+          <Boss :instance="monsters[currentMonster]" :selected="isMonsterTurn" />
         </div>
       </div>
     </section>
@@ -112,6 +112,7 @@
         monsters,
         currentMonster: 0,
         currentPlayer: 0,
+        isMonsterTurn: false,
         lastAction: "",
         lastMonsterAction: ""
       }
@@ -141,7 +142,7 @@
                 this.getCurrentPlayer().health.current += playerHeal;
                 this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
               }
-              this.monsterAttack();   
+              this.monsterAttack();
           }
       },
       playerDoSomethingSpecial() {
@@ -154,10 +155,10 @@
               if(!this.checkWin()){
                 this.monsterAttack();
               }
-            }  
+            }
       },
       isSelected(playerId) {
-        return playerId === this.currentPlayer
+        return !this.isMonsterTurn && (playerId === this.currentPlayer)
       },
       getCurrentPlayer() {
         return this.players[this.currentPlayer]
@@ -182,9 +183,11 @@
           for(let i = 0; i < players.length; i++){
             players[i].health.current = players[i].health.max;
             players[i].mana.current = players[i].mana.max;
-          }  
+          }
       },
       monsterAttack(){
+        this.isMonsterTurn = true;
+        setTimeout(() => {
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
           let monsterTarget = this.calculateRng(0, players.length);
           if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
@@ -196,8 +199,10 @@
           }else if(!this.checkAliveParty()){
             this.monsterAttack();
           }
-          this.nextTurn();  
-        },
+          this.isMonsterTurn = false;
+          this.nextTurn();
+        }, 3000)
+      },
       calculateRng(min,max){
           return Math.max(Math.floor(Math.random() * max) + 1, min);
       },
@@ -227,7 +232,7 @@
         }else if(this.checkAliveParty()){
             window.location.reload()
             return true;
-        }   
+        }
             return false;
         },
       checkMana(manaRequired){

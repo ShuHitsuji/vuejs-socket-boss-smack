@@ -60,5 +60,16 @@
     position: absolute;
     top: -17px;
     left: 5px;
+    -webkit-animation: action .5s infinite  alternate;
+    animation: action .5s infinite  alternate;
+  }
+
+  @-webkit-keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  @keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
   }
 </style>
