@@ -35,7 +35,7 @@
         <i v-on:click="setCurrentInfo(tutorial)">i</i>
       </aside>
       <main class="description">
-        <pre class="info">{{ info }}</pre>
+        <div class="info" v-html="info" />
       </main>
       <nav class="start">
         <i class="arrow left"></i>
@@ -70,12 +70,6 @@ const heroes = {
   })
 }
 
-const charDescs = {
-  knight: "Caballero errante oriundo de las tierras de Astora. Protegido por una armadura de diamantina reforjada, espada de veraplata, y un escudo de oricalco pulido. Su identidad permanece un misterio, pero sus habilidades en combate son formidables. Un héroe duradero, ideal para las líneas delanteras de cualquier pandilla de aventureros que se consideren a sí mismos serios (y precavidos).",
-  ranger: "Elfa guardabosques de los bosques de Jaspe. Armada con un arco bendecido por la diosa Elune misma, el refulgiente acero élfico de sus flechas es lo último que ven (y sienten) aquellos que osan desafiarla. De armadura ligera, los elfos consideran el metal como una debilidad de la cual disponer, prefiriendo emplear su agilidad preternatural para esquivar los golpes de sus adversarios. Un héroe con gran evasión y gran daño sostenido en el tiempo.",
-  mage: "Hechicero acólito proveniente del Pantano Meridional. De vestiduras y carácter modesto y discreto, este jóven prodigio dominó las artes de la piromancia a la temprana edad de 10. Adepto y experto en las antiguas artes arcanas, el poder de sus hechizos es capaz de hacerle frente a cualquier acero o metal (y cualquier contendiente/s que lo inhabite/n) que ose cruzársele. Héroe frágil pero con un asombroso poder destructivo, ideal para ofrecer soporte a distancia y controlar el campo de batalla si se lo protege."
-}
-
 export default {
   name: 'CharactersSelection',
   data: () => {
@@ -97,7 +91,6 @@ Click sobre un personaje para ver su descripción.`
   },
   methods: {
     handleDrop(playerNumber, type) {
-      console.log(playerNumber, type)
       this.droppables[type].push(playerNumber);
       this.draggables = this.draggables.filter(number => number !== playerNumber);
       const hero = this.heroes[type];
@@ -179,6 +172,7 @@ Click sobre un personaje para ver su descripción.`
     justify-content: center;
     align-items: center;
     color: white;
+    min-width: 300px;
   }
 
   .description {
@@ -190,7 +184,7 @@ Click sobre un personaje para ver su descripción.`
     color: white;
     font-family: PressStart;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 17px;
   }
 
   .start {
@@ -198,6 +192,7 @@ Click sobre un personaje para ver su descripción.`
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 300px;
   }
 
   .arrow {
