@@ -18,7 +18,7 @@
       </div>
       <div class="monster-area">
         <div class="monster">
-          <Boss/>
+          <Boss :instance="monsters[currentMonster]" />
         </div>
       </div>
     </section>
@@ -33,13 +33,14 @@
                    :status="{ health: hero.health, mana: hero.mana }"
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
         />
-        <StatusBar label="Boss"
-                   :status="{ health: { max: 500, current: 500 } }"
+        <StatusBar :label="monsters[currentMonster].name"
+                   :status="{ health: monsters[currentMonster].health }"
                    :colors="{ health: 'red' }"
         />
       </main>
       <div class="bard-area">
         <p>{{ lastAction }}</p>
+        <p>{{ lastMonsterAction }}</p>
       </div>
     </footer>
   </div>
@@ -48,31 +49,58 @@
 <script>
   import StatusBar from "../components/StatusBar";
   import Player from '../entities/Player'
+  import Monster from '../entities/Monster'
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
   const players = [
     new Player({
-      name: 'Guille',
+      name: 'Elf',
       type: 'ranger',
-      health: 150,
-      mana: 60,
-      attack: 60
+      health: 175,
+      mana: 100,
+      attack: 40
     }),
     new Player({
-      name: 'Francho',
+      name: 'Knight',
       type: 'knight',
       health: 200,
-      mana: 30,
-      attack: 35
+      mana: 100,
+      attack: 30
     }),
     new Player({
-      name: 'Axel',
+      name: 'Old Mage',
       type: 'mage',
-      health: 100,
+      health: 150,
       mana: 100,
-      attack: 80
+      attack: 60
+    })
+  ]
+  const monsters=[
+    new Monster({
+      name: 'Wisp',
+      health: 200,
+      attack: 45,
+      type: 'wisp'
+    }),
+    new Monster({
+      name: 'Badass Slime',
+      health: 525,
+      attack: 25,
+      type: 'slime'
+    }),
+    new Monster({
+      name: 'Fishlett',
+      health: 700,
+      attack: 20,
+      type: 'fish'
+    }),
+    new Monster({
+      name: 'The hand',
+      health: 999,
+      attack: 20,
+      type: 'tv'
     })
   ]
 
@@ -81,22 +109,52 @@
     data: () => {
       return {
         players,
+        monsters,
+        currentMonster: 0,
         currentPlayer: 0,
-        lastAction: ""
+        lastAction: "",
+        lastMonsterAction: ""
       }
     },
     methods: {
       playerAttacks() {
-        this.lastAction = `${this.getCurrentPlayer().name} attacks`;
-        this.nextTurn();
-      },
+          let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+          this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+          this.getCurrentMonster().health.current -= playerDamage;
+          this.regenMana(10);
+          if(!this.checkWin()){
+              this.monsterAttack();
+          }
+        },
       playerHeals() {
-        this.lastAction = `${this.getCurrentPlayer().name} heals`
-        this.nextTurn();
+        let manaCost = 20;
+          if(this.checkMana(manaCost)){
+              let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
+              let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
+              let playerHeal = this.calculateRng(minHeal, maxHeal);
+              this.getCurrentPlayer().mana.current -= manaCost;
+              if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
+                this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
+                let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
+                this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing} hp`
+              }else{
+                this.getCurrentPlayer().health.current += playerHeal;
+                this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
+              }
+              this.monsterAttack();   
+          }
       },
       playerDoSomethingSpecial() {
-        this.lastAction = `${this.getCurrentPlayer().name} does something... special`
-        this.nextTurn();
+        let manaCost = 40;
+           if(this.checkMana(manaCost)){
+              this.getCurrentPlayer().mana.current -= manaCost;
+              let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
+              this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+              this.getCurrentMonster().health.current -= playerDamage;
+              if(!this.checkWin()){
+                this.monsterAttack();
+              }
+            }  
       },
       isSelected(playerId) {
         return playerId === this.currentPlayer
@@ -104,9 +162,89 @@
       getCurrentPlayer() {
         return this.players[this.currentPlayer]
       },
+      getCurrentMonster(){
+        return this.monsters[this.currentMonster]
+      },
       nextTurn() {
+        this.checkWin();
         this.currentPlayer = (++this.currentPlayer) % 3
-      }
+        if(!this.checkAliveParty() && !this.checkAliveStatus()){
+          this.nextTurn();
+        }
+      },
+      nextMonster(){
+        this.currentMonster = ++this.currentMonster;
+        this.lastAction = ``;
+        this.lastMonsterAction = ``;
+        if(this.currentMonster > this.monsters.length){
+          window.location.reload();
+        }
+          for(let i = 0; i < players.length; i++){
+            players[i].health.current = players[i].health.max;
+            players[i].mana.current = players[i].mana.max;
+          }  
+      },
+      monsterAttack(){
+          let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
+          let monsterTarget = this.calculateRng(0, players.length);
+          if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
+            this.players[monsterTarget - 1].health.current -= monsterDamage;
+            this.lastMonsterAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
+            if(this.players[monsterTarget - 1].health.current < 0){
+              this.players[monsterTarget - 1].health.current = 0;
+            }
+          }else if(!this.checkAliveParty()){
+            this.monsterAttack();
+          }
+          this.nextTurn();  
+        },
+      calculateRng(min,max){
+          return Math.max(Math.floor(Math.random() * max) + 1, min);
+      },
+      checkAliveStatus(){
+        if(this.getCurrentPlayer().health.current > 0){
+          return true;
+        }else{
+          return false;
+        }
+      },
+      checkAliveParty(){
+        var partyMembers = players.length;
+        for(let i = 0; i < players.length; i++){
+          if(players[i].health.current < 1){
+            partyMembers--;
+          }
+        }
+        if(partyMembers <= 0){
+          return true;
+        }
+          return false;
+      },
+      checkWin(){
+        if(this.getCurrentMonster().health.current <= 0){
+            this.nextMonster();
+            return true;
+        }else if(this.checkAliveParty()){
+            window.location.reload()
+            return true;
+        }   
+            return false;
+        },
+      checkMana(manaRequired){
+          if(this.getCurrentPlayer().mana.current < manaRequired){
+              this.lastAction = `${this.getCurrentPlayer().name} doesn't have enough Mana`
+              this.lastMonsterAction = ``;
+              return false;
+          }else{
+              return true;
+          }
+        },
+        regenMana(mana){
+          this.getCurrentPlayer().mana.current += mana;
+          if(this.getCurrentPlayer().mana.current > this.getCurrentPlayer().mana.max){
+            this.getCurrentPlayer().mana.current = this.getCurrentPlayer().mana.max;
+          }
+        }
     },
     components: {
       Hero,
@@ -176,5 +314,6 @@
     justify-content: center;
     align-items: flex-start;
     padding: 0 15px;
+    flex-direction: column;
   }
 </style>

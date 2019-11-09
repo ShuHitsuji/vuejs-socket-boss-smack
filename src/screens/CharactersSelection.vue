@@ -4,34 +4,18 @@
       <h1 class="title">Bienvenidos al combate</h1>
       <h2 class="subtitle">Elijan sus personajes</h2>
       <div class="characters-container">
-        <div class="character">
-          <drop @drop="(player) => handleDrop(player, 'ranger')">
+        <div class="character"
+             v-for="hero in heroes"
+             :key="hero.keyName"
+             v-on:click="setCurrentInfo(hero.getDescription())"
+        >
+          <drop @drop="(player) => { handleDrop(player, hero.keyName); }">
             <div class="selectors">
-              <div v-for="selector in droppables.ranger"
+              <div v-for="selector in droppables[hero.keyName]"
                    :key="selector"
                    class="selector"></div>
             </div>
-            <Hero :instance="heroes.ranger" />
-          </drop>
-        </div>
-        <div class="character">
-          <drop @drop="(player) => handleDrop(player, 'knight')">
-            <div class="selectors">
-              <div v-for="selector in droppables.knight"
-                   :key="selector"
-                   class="selector"></div>
-            </div>
-            <Hero :instance="heroes.knight" />
-          </drop>
-        </div>
-        <div class="character">
-          <drop @drop="(player) => handleDrop(player, 'mage')">
-            <div class="selectors">
-              <div v-for="selector in droppables.mage"
-                   :key="selector"
-                   class="selector"></div>
-            </div>
-            <Hero :instance="heroes.mage" />
+            <Hero :instance="hero" />
           </drop>
         </div>
       </div>
@@ -48,10 +32,10 @@
     </section>
     <footer class="footer">
       <aside class="tutorial">
-        <i>i</i>
+        <i v-on:click="setCurrentInfo(tutorial)">i</i>
       </aside>
       <main class="description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <pre class="info">{{ info }}</pre>
       </main>
       <nav class="start">
         <i class="arrow left"></i>
@@ -89,21 +73,33 @@ const heroes = {
 export default {
   name: 'CharactersSelection',
   data: () => {
+    const tutorial = `Para selección, arrastrar los puntos sobre los personajes.
+Click sobre un personaje para ver su descripción.`
+
     return {
       heroes,
-      draggables: [1, 2, 3],
+      selectedHero: null,
+      draggables: [1, 2, 3], // player numbers
       droppables: {
         ranger: [],
         knight: [],
         mage: [],
-      }
+      },
+      tutorial,
+      info: tutorial
     }
   },
   methods: {
-    handleDrop(player, type) {
-      this.droppables[type].push(player);
-      this.draggables = this.draggables.filter(number => number !== player);
+    handleDrop(playerNumber, type) {
+      console.log(playerNumber, type)
+      this.droppables[type].push(playerNumber);
+      this.draggables = this.draggables.filter(number => number !== playerNumber);
+      const hero = this.heroes[type];
+      this.setCurrentInfo(hero.getDescription())
     },
+    setCurrentInfo(info) {
+      this.info = info
+    }
   },
   components: {
     Hero, Drag, Drop
@@ -182,9 +178,13 @@ export default {
   .description {
     flex: 2;
     padding: 10px;
+  }
+
+  .info {
     color: white;
     font-family: PressStart;
     font-size: 12px;
+    line-height: 16px;
   }
 
   .start {
