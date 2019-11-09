@@ -7,7 +7,7 @@
         <div class="character"
              v-for="hero in heroes"
              :key="hero.keyName"
-             v-on:click="setCurrentInfo(hero.getDescription())"
+             v-on:click="showHeroDescription(hero)"
         >
           <drop @drop="(player) => { handleDrop(player, hero.keyName); }">
             <div class="selectors">
@@ -73,8 +73,9 @@ const heroes = {
 export default {
   name: 'CharactersSelection',
   data: () => {
-    const tutorial = `Para selección, arrastrar los puntos sobre los personajes.
-Click sobre un personaje para ver su descripción.`
+    let tutorial = '<h3>Tutorial</h3>';
+    tutorial += 'Para selección, arrastrar los puntos sobre los personajes.<br />';
+    tutorial += 'Click sobre un personaje para ver su descripción.';
 
     return {
       heroes,
@@ -94,7 +95,12 @@ Click sobre un personaje para ver su descripción.`
       this.droppables[type].push(playerNumber);
       this.draggables = this.draggables.filter(number => number !== playerNumber);
       const hero = this.heroes[type];
-      this.setCurrentInfo(hero.getDescription())
+
+      this.showHeroDescription(hero)
+    },
+    showHeroDescription(hero) {
+      let description = '<h3>Descripción</h3>' + hero.getDescription()
+      this.setCurrentInfo(description)
     },
     setCurrentInfo(info) {
       this.info = info
@@ -185,6 +191,11 @@ Click sobre un personaje para ver su descripción.`
     font-family: PressStart;
     font-size: 12px;
     line-height: 17px;
+  }
+
+  .info >>> h3,
+  .info >>> b{
+    color: rgba(249, 255, 76, 0.55);
   }
 
   .start {
