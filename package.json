@@ -13,8 +13,10 @@
     "core-js": "^2.6.5",
     "gh-pages": "^2.1.1",
     "vue": "^2.6.10",
+    "vue-disabled": "0.0.2",
     "vue-drag-drop": "^1.1.4",
     "vue-gh-pages": "^1.19.0",
+    "vue-observe-visibility": "^0.4.6",
     "yarn": "^1.19.1"
   },
   "devDependencies": {
