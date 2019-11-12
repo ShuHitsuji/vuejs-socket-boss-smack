@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <CharactersSelection />
+    <Combat />
   </div>
 </template>
 

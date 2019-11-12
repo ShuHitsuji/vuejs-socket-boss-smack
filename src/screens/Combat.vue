@@ -40,7 +40,6 @@
       </main>
       <div class="bard-area">
         <p>{{ lastAction }}</p>
-        <p>{{ lastMonsterAction }}</p>
       </div>
     </footer>
   </div>
@@ -113,8 +112,7 @@
         currentMonster: 0,
         currentPlayer: 0,
         isMonsterTurn: false,
-        lastAction: "",
-        lastMonsterAction: ""
+        lastAction: ""
       }
     },
     methods: {
@@ -192,7 +190,7 @@
           let monsterTarget = this.calculateRng(0, players.length);
           if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
             this.players[monsterTarget - 1].health.current -= monsterDamage;
-            this.lastMonsterAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
+            this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
             if(this.players[monsterTarget - 1].health.current < 0){
               this.players[monsterTarget - 1].health.current = 0;
             }
@@ -201,7 +199,7 @@
           }
           this.isMonsterTurn = false;
           this.nextTurn();
-        }, 3000)
+        }, 1500)
       },
       calculateRng(min,max){
           return Math.max(Math.floor(Math.random() * max) + 1, min);
