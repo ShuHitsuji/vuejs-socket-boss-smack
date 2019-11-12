@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="content">
-      <button class="button arcade-button" v-on:click="onClick" :disabled="ref"></button>
+      <button class="button arcade-button" v-on:click="onClick" :disabled="monsterTurn"></button>
       <label class="button-label">{{ label }}</label>
     </div>
   </div>
@@ -10,7 +10,7 @@
 <script>
   export default {
     name: 'Button',
-    props: ['label','ref'],
+    props: ['label','monsterTurn'],
     methods: {
       onClick() {
         this.$emit('click')
