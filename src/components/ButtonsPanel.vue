@@ -1,8 +1,8 @@
 <template>
     <div class="buttons-container">
-        <Button label="Ataque" v-on:click="onAttack" />
-        <Button label="Curación" v-on:click="onHeal" />
-        <Button label="Acción especial" v-on:click="onSpecialAction" />
+        <Button label="Ataque" v-on:click="onAttack" :ref="ref"/>
+        <Button label="Curación" v-on:click="onHeal" :ref="ref"/>
+        <Button label="Acción especial" v-on:click="onSpecialAction" :ref="ref" />
     </div>
 </template>
 
@@ -11,6 +11,7 @@
 
   export default {
     name: 'ButtonsPanel',
+    props: ['ref'],
     methods: {
       onAttack: function() {
         this.$emit('attack')
