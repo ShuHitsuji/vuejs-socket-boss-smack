@@ -12,7 +12,7 @@ const types = {
   fish: {
     name: "Fish",
     img: "fish.png",
-    imgDeath: "tv-death.png"
+    imgDeath: "fish-death.png"
   },
   tv: {
     name: "Tv",

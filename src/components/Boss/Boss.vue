@@ -49,8 +49,8 @@
     height:80px;
   }
   .slime {
-    width:100px;
-    height:100px;
+    width:90px;
+    height:90px;
   }
   .fish {
     width:110px;
