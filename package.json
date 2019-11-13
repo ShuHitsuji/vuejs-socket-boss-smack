@@ -14,8 +14,7 @@
     "gh-pages": "^2.1.1",
     "vue": "^2.6.10",
     "vue-drag-drop": "^1.1.4",
-    "vue-gh-pages": "^1.19.0",
-    "yarn": "^1.19.1"
+    "vue-gh-pages": "^1.19.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
