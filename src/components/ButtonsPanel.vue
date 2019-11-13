@@ -1,8 +1,8 @@
 <template>
     <div class="buttons-container">
-        <Button label="Ataque" v-on:click="onAttack" :monsterTurn="monsterTurn"/>
-        <Button label="Curación" v-on:click="onHeal" :monsterTurn="monsterTurn"/>
-        <Button label="Acción especial" v-on:click="onSpecialAction" :monsterTurn="monsterTurn" />
+        <Button label="Ataque" v-on:click="onAttack" :disabled="disabled"/>
+        <Button label="Curación" v-on:click="onHeal" :disabled="disabled"/>
+        <Button label="Acción especial" v-on:click="onSpecialAction" :disabled="disabled" />
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 
   export default {
     name: 'ButtonsPanel',
-    props: ['monsterTurn'],
+    props: ['disabled'],
     methods: {
       onAttack: function() {
         this.$emit('attack')

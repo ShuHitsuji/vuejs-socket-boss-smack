@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueDisabled from 'vue-disabled'
-Vue.use(VueDisabled)
 
 Vue.config.productionTip = false
 
