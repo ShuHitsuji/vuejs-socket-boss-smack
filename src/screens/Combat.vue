@@ -142,7 +142,9 @@
                 this.getCurrentPlayer().health.current += playerHeal;
                 this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
               }
-              this.monsterAttack();
+              if(!this.checkWin()){
+                this.monsterAttack();
+              }
           }
       },
       playerDoSomethingSpecial() {
@@ -154,7 +156,7 @@
               this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
               this.getCurrentMonster().health.current -= playerDamage;
               if(!this.checkWin()){
-                this.monsterAttack();
+                  this.monsterAttack();
               }
             }
       },
@@ -196,20 +198,24 @@
         this.isMonsterTurn = true;
         setTimeout(() => {
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
-          let monsterTarget = this.calculateRng(0, players.length);
-          if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
-            this.players[monsterTarget - 1].health.current -= monsterDamage;
-            this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
-            if(this.players[monsterTarget - 1].health.current <= 0){
-              this.players[monsterTarget - 1].health.current = 0;
-              this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
-            }
-          }else if(!this.checkAliveParty()){
-            this.monsterAttack();
-          }
+         // let monsterTarget = this.calculateRng(0, players.length);
+          this.calculateMonsterTarget(monsterDamage);
           this.isMonsterTurn = false;
           this.nextTurn();
         }, 1500)
+      },
+      calculateMonsterTarget(monsterDamage){
+          let monsterTarget = this.calculateRng(0, players.length);
+          if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
+              this.players[monsterTarget - 1].health.current -= monsterDamage;
+              this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
+              if(this.players[monsterTarget - 1].health.current <= 0){
+                this.players[monsterTarget - 1].health.current = 0;
+                this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
+              }
+            }else if(!this.checkAliveParty()){
+              this.calculateMonsterTarget(monsterDamage);
+            }
       },
       calculateRng(min,max){
           return Math.max(Math.floor(Math.random() * max) + 1, min);
