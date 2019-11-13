@@ -24,7 +24,7 @@
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <ButtonsPanel :disabled="isMonsterTurn" v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
+        <ButtonsPanel v-bind:style="{opacity: isMonsterTurn?0:1}" :disabled="isMonsterTurn" v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
         <StatusBar v-for="hero in players"
@@ -117,6 +117,7 @@
     },
     methods: {
       playerAttacks() {
+          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
           let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
           this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
           this.getCurrentMonster().health.current -= playerDamage;
@@ -128,6 +129,7 @@
       playerHeals() {
         let manaCost = 20;
           if(this.checkMana(manaCost)){
+              this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgHeal;
               let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
               let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
               let playerHeal = this.calculateRng(minHeal, maxHeal);
@@ -146,6 +148,7 @@
       playerDoSomethingSpecial() {
         let manaCost = 40;
            if(this.checkMana(manaCost)){
+              this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
               this.getCurrentPlayer().mana.current -= manaCost;
               let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
               this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
@@ -165,6 +168,7 @@
         return this.monsters[this.currentMonster]
       },
       nextTurn() {
+        this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
         this.checkWin();
         this.currentPlayer = (++this.currentPlayer) % 3
         if(!this.checkAliveParty() && !this.checkAliveStatus()){
@@ -186,6 +190,7 @@
       monsterAttack(){
         this.isMonsterTurn = true;
         setTimeout(() => {
+          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
           let monsterTarget = this.calculateRng(0, players.length);
           if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
