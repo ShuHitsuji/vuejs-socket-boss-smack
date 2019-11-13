@@ -168,7 +168,11 @@
         return this.monsters[this.currentMonster]
       },
       nextTurn() {
-        this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+        if(!this.checkAliveStatus()){
+          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgDeath;
+        }else{
+          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+        }
         this.checkWin();
         this.currentPlayer = (++this.currentPlayer) % 3
         if(!this.checkAliveParty() && !this.checkAliveStatus()){
@@ -183,6 +187,7 @@
           window.location.reload();
         }
           for(let i = 0; i < players.length; i++){
+            players[i].type.img = players[i].type.imgIdle;
             players[i].health.current = players[i].health.max;
             players[i].mana.current = players[i].mana.max;
           }
@@ -190,14 +195,14 @@
       monsterAttack(){
         this.isMonsterTurn = true;
         setTimeout(() => {
-          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
           let monsterTarget = this.calculateRng(0, players.length);
           if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
             this.players[monsterTarget - 1].health.current -= monsterDamage;
             this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
-            if(this.players[monsterTarget - 1].health.current < 0){
+            if(this.players[monsterTarget - 1].health.current <= 0){
               this.players[monsterTarget - 1].health.current = 0;
+              this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
             }
           }else if(!this.checkAliveParty()){
             this.monsterAttack();
