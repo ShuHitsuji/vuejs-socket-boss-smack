@@ -79,7 +79,7 @@
   const monsters=[
     new Monster({
       name: 'Wisp',
-      health: 200,
+      health: 250,
       attack: 45,
       type: 'wisp'
     }),
