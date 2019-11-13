@@ -6,7 +6,7 @@ const types = {
     imgIdle: "ranger.png",
     imgHeal: "ranger-heal.png",
     imgAttack: "ranger-attack.png",
-    imgDeath: "mage-death.png",
+    imgDeath: "ranger-death.png",
     description: "Elfa guardabosques de los bosques de Jaspe. Armada con un arco bendecido por la diosa Elune misma, el refulgiente acero élfico de sus flechas es lo último que ven (y sienten) aquellos que osan desafiarla. De armadura ligera, los elfos consideran el metal como una debilidad de la cual disponer, prefiriendo emplear su agilidad preternatural para esquivar los golpes de sus adversarios. Un héroe con gran evasión y gran daño sostenido en el tiempo."
   },
   knight: {
@@ -15,8 +15,8 @@ const types = {
     img: "knight.png",
     imgIdle: "knight.png",
     imgHeal: "knight-heal.png",
-    imgAttack: "ranger-attack.png",
-    imgDeath: "mage-death.png",
+    imgAttack: "knight-attack.png",
+    imgDeath: "knight-death.png",
     description: "Caballero errante oriundo de las tierras de Astora. Protegido por una armadura de diamantina reforjada, espada de veraplata, y un escudo de oricalco pulido. Su identidad permanece un misterio, pero sus habilidades en combate son formidables. Un héroe duradero, ideal para las líneas delanteras de cualquier pandilla de aventureros que se consideren a sí mismos serios (y precavidos)."
   },
   mage: {
