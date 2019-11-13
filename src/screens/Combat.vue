@@ -251,7 +251,9 @@
         if(this.getCurrentMonster().health.current <= 0){
           this.getCurrentMonster().health.current = 0;
           this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
+          this.isMonsterTurn = true;
           setTimeout(()=>{
+            this.isMonsterTurn = false;
             this.nextMonster();
           },1500)
             
