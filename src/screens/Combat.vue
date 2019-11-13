@@ -249,7 +249,12 @@
       },
       checkWin(){
         if(this.getCurrentMonster().health.current <= 0){
+          this.getCurrentMonster().health.current = 0;
+          this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
+          setTimeout(()=>{
             this.nextMonster();
+          },1500)
+            
             return true;
         }else if(this.checkAliveParty()){
             window.location.reload()

@@ -1,19 +1,23 @@
 const types = {
   wisp: {
     name: "Wisp",
-    img: "wisp.png"
+    img: "wisp.png",
+    imgDeath: "wisp-death.png"
   },
   slime: {
     name: "Slime",
-    img: "slime.png"
+    img: "slime.png",
+    imgDeath: "slime-death.png"
   },
   fish: {
     name: "Fish",
-    img: "fish.png"
+    img: "fish.png",
+    imgDeath: "tv-death.png"
   },
   tv: {
     name: "Tv",
-    img: "tv.png"
+    img: "tv.png",
+    imgDeath: "tv-death.png"
   }
 }
 class Monster {
