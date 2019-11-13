@@ -198,7 +198,6 @@
         this.isMonsterTurn = true;
         setTimeout(() => {
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
-         // let monsterTarget = this.calculateRng(0, players.length);
           this.calculateMonsterTarget(monsterDamage);
           this.isMonsterTurn = false;
           this.nextTurn();
