@@ -6,6 +6,7 @@ const types = {
     imgIdle: "ranger.png",
     imgHeal: "ranger-heal.png",
     imgAttack: "ranger-attack.png",
+    imgSpecial: "ranger-special.png",
     imgDeath: "ranger-death.png",
     description: "Elfa guardabosques de los bosques de Jaspe. Armada con un arco bendecido por la diosa Elune misma, el refulgiente acero élfico de sus flechas es lo último que ven (y sienten) aquellos que osan desafiarla. De armadura ligera, los elfos consideran el metal como una debilidad de la cual disponer, prefiriendo emplear su agilidad preternatural para esquivar los golpes de sus adversarios. Un héroe con gran evasión y gran daño sostenido en el tiempo."
   },
@@ -16,6 +17,7 @@ const types = {
     imgIdle: "knight.png",
     imgHeal: "knight-heal.png",
     imgAttack: "knight-attack.png",
+    imgSpecial: "knight-special.png",
     imgDeath: "knight-death.png",
     description: "Caballero errante oriundo de las tierras de Astora. Protegido por una armadura de diamantina reforjada, espada de veraplata, y un escudo de oricalco pulido. Su identidad permanece un misterio, pero sus habilidades en combate son formidables. Un héroe duradero, ideal para las líneas delanteras de cualquier pandilla de aventureros que se consideren a sí mismos serios (y precavidos)."
   },
@@ -26,6 +28,7 @@ const types = {
     imgIdle: "mage.png",
     imgHeal: "mage-heal.png",
     imgAttack: "mage-attack.png",
+    imgSpecial: "mage-special.png",
     imgDeath: "mage-death.png",
     description: "Hechicero acólito proveniente del Pantano Meridional. De vestiduras y carácter modesto y discreto, este jóven prodigio dominó las artes de la piromancia a la temprana edad de 10. Adepto y experto en las antiguas artes arcanas, el poder de sus hechizos es capaz de hacerle frente a cualquier acero o metal (y cualquier contendiente/s que lo inhabite/n) que ose cruzársele. Héroe frágil pero con un asombroso poder destructivo, ideal para ofrecer soporte a distancia y controlar el campo de batalla si se lo protege."
   }
