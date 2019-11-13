@@ -118,6 +118,9 @@
     methods: {
       playerAttacks() {
           this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
+          setTimeout(() => {
+            this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+          }, 600)
           let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
           this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
           this.getCurrentMonster().health.current -= playerDamage;
@@ -130,6 +133,9 @@
         let manaCost = 20;
           if(this.checkMana(manaCost)){
               this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgHeal;
+              setTimeout(() => {
+                this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+              }, 600)
               let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
               let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
               let playerHeal = this.calculateRng(minHeal, maxHeal);
@@ -151,6 +157,9 @@
         let manaCost = 40;
            if(this.checkMana(manaCost)){
               this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
+              setTimeout(() => {
+                this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+              }, 600)
               this.getCurrentPlayer().mana.current -= manaCost;
               let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
               this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
