@@ -58,10 +58,20 @@
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
+  const heroFactory = function({name, type}){
+    if(type === 'knight'){
+      return new Knight({name, type});
+    }else if (type === 'ranger'){
+      return new Ranger({name, type});
+    }else if (type === 'mage'){
+      return new Mage({name, type});
+    }
+  }
+
   const players = [  
-    new Ranger({name: 'Elf', type: 'ranger'}),
-    new Knight({name: 'Knight', type: 'knight'}), 
-    new Mage({name: 'Old Mage', type: 'mage'}) 
+    heroFactory({name: 'Elf', type: 'ranger'}),
+    heroFactory({name: 'Knight', type: 'knight'}), 
+    heroFactory({name: 'Old Mage', type: 'mage'}) 
     ]
 
   const monsters=[
@@ -90,39 +100,7 @@
       type: 'tv'
     })
   ]
-/*
-  //FACTORY CON IF
-  const createHero = function({type, name}){
-    if(type === players[0].type){
-      return new Player(name, players[0].type, players[0].health, players[0].attack, players[0].mana);
-    }else if(type === players[1].type){
-      return new Player(name, players[1].type, players[1].health, players[1].attack, players[1].mana);
-    }else if(type === players[2].type){
-      return new Player(name, players[2].type, players[2].health, players[2].attack, players[2].mana);
-    }else{
-      return new Player("PlaceholderHero", players[0].type, players[0].health, players[0].attack, players[0].mana);
-    }
-  }
-*/
-
-/*
-  //FACTORY CON SWITCH
-  const createHero = function({type, name}){
-    switch(type){
-      case players[0].type:
-        return new Player(name, players[0].type, players[0].health, players[0].attack, players[0].mana);
-        break;
-      case players[1].type:
-        return new Player(name, players[1].type, players[1].health, players[1].attack, players[1].mana);
-        break;
-      case players[2].type:
-        return new Player(name, players[2].type, players[2].health, players[2].attack, players[2].mana);
-        break;
-      default:
-        return false;  
-    }
-  }
-*/
+  
   export default {
     name: 'Combat',
     data: () => {
