@@ -47,35 +47,23 @@
 
 <script>
   import StatusBar from "../components/StatusBar";
-  import Player from '../entities/Player'
+
+  //import Player from '../entities/Player'
+  import Knight from '../entities/Knight'
+  import Ranger from '../entities/Ranger'
+  import Mage from '../entities/Mage'
+
   import Monster from '../entities/Monster'
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
-  const players = [
-    new Player({
-      name: 'Elf',
-      type: 'ranger',
-      health: 175,
-      mana: 100,
-      attack: 60
-    }),
-    new Player({
-      name: 'Knight',
-      type: 'knight',
-      health: 250,
-      mana: 100,
-      attack: 40
-    }),
-    new Player({
-      name: 'Old Mage',
-      type: 'mage',
-      health: 150,
-      mana: 100,
-      attack: 80
-    })
-  ]
+  const players = [ 
+    new Knight({name: 'Knight', type: 'knight'}), 
+    new Ranger({name: 'Elf', type: 'ranger'}), 
+    new Mage({name: 'Old Mage', type: 'mage'}) 
+    ]
+
   const monsters=[
     new Monster({
       name: 'Wisp',
@@ -102,7 +90,39 @@
       type: 'tv'
     })
   ]
+/*
+  //FACTORY CON IF
+  const createHero = function({type, name}){
+    if(type === players[0].type){
+      return new Player(name, players[0].type, players[0].health, players[0].attack, players[0].mana);
+    }else if(type === players[1].type){
+      return new Player(name, players[1].type, players[1].health, players[1].attack, players[1].mana);
+    }else if(type === players[2].type){
+      return new Player(name, players[2].type, players[2].health, players[2].attack, players[2].mana);
+    }else{
+      return new Player("PlaceholderHero", players[0].type, players[0].health, players[0].attack, players[0].mana);
+    }
+  }
+*/
 
+/*
+  //FACTORY CON SWITCH
+  const createHero = function({type, name}){
+    switch(type){
+      case players[0].type:
+        return new Player(name, players[0].type, players[0].health, players[0].attack, players[0].mana);
+        break;
+      case players[1].type:
+        return new Player(name, players[1].type, players[1].health, players[1].attack, players[1].mana);
+        break;
+      case players[2].type:
+        return new Player(name, players[2].type, players[2].health, players[2].attack, players[2].mana);
+        break;
+      default:
+        return false;  
+    }
+  }
+*/
   export default {
     name: 'Combat',
     data: () => {
