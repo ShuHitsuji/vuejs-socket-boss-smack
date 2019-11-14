@@ -11,7 +11,4 @@ class Ranger extends Player{
 
 }
 
-Ranger.prototype = new Player();
-Ranger.prototype.constructor = Ranger;
-
 export default Ranger;

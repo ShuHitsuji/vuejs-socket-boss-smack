@@ -58,9 +58,9 @@
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
-  const players = [ 
+  const players = [  
+    new Ranger({name: 'Elf', type: 'ranger'}),
     new Knight({name: 'Knight', type: 'knight'}), 
-    new Ranger({name: 'Elf', type: 'ranger'}), 
     new Mage({name: 'Old Mage', type: 'mage'}) 
     ]
 

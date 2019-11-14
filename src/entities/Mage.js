@@ -11,7 +11,4 @@ class Mage extends Player{
 
 }
 
-Mage.prototype = new Player();
-Mage.prototype.constructor = Mage;
-
 export default Mage;

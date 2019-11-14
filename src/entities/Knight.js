@@ -11,7 +11,4 @@ class Knight extends Player{
 
 }
 
-Knight.prototype = new Player();
-Knight.prototype.constructor = Knight;
-
 export default Knight;
