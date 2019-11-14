@@ -24,7 +24,7 @@
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <ButtonsPanel v-bind:style="{opacity: isMonsterTurn?0:1}" :disabled="isMonsterTurn" v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
+        <ButtonsPanel v-bind:style="{opacity: isMonsterTurn?0.35:1}" :disabled="isMonsterTurn" v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
         <StatusBar v-for="hero in players"
