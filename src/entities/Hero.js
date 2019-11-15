@@ -3,7 +3,8 @@ class Hero {
   img = {}
   description = ''
 
-  constructor({name, type, health, attack, mana}) {
+  constructor({id = null, name, type, health, attack, mana}) {
+    this.id = id || type;
     this.name = name;
     this.keyName = type;
     this.type = type;
@@ -24,6 +25,10 @@ class Hero {
 
   getImage() {
     return this.img[this.status]
+  }
+
+  getName() {
+
   }
 
   getDescription() {

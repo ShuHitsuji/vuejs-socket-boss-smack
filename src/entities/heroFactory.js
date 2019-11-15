@@ -8,6 +8,6 @@ const types = {
   mage: Mage
 }
 
-export default function createHero({name, type}) {
-  return new types[type]({name, type})
+export default function createHero({id = null, name, type}) {
+  return new types[type]({id, name, type})
 }

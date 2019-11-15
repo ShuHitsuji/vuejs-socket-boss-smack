@@ -32,13 +32,15 @@
     </section>
     <footer class="footer">
       <aside class="tutorial">
-        <i v-on:click="setCurrentInfo(tutorial)">i</i>
+        <i v-on:click="displayTutorial()">i</i>
       </aside>
       <main class="description">
         <div class="info" v-html="info"/>
       </main>
       <nav class="start">
-        <i class="arrow left"></i>
+        <button class="start-button">
+          <i class="arrow left" v-on:click="startCombat()"></i>
+        </button>
       </nav>
     </footer>
   </div>
@@ -48,6 +50,7 @@
   import createHero from '../entities/heroFactory'
   import Hero from '../components/Hero/Hero'
   import {Drag, Drop} from 'vue-drag-drop';
+  import {router} from '../router'
 
   const heroes = {
     ranger: createHero({type: 'ranger'}),
@@ -58,8 +61,7 @@
   export default {
     name: 'CharactersSelection',
     data: () => {
-      let tutorial = '<h3>Tutorial</h3>';
-      tutorial += 'Para selección, arrastrar los puntos sobre los personajes.<br />';
+      let tutorial = 'Para selección, arrastrar los puntos sobre los personajes.<br />';
       tutorial += 'Click sobre un personaje para ver su descripción.';
 
       return {
@@ -72,10 +74,16 @@
           mage: [],
         },
         tutorial,
-        info: tutorial
+        info: ''
       }
     },
+    created: function () {
+      this.displayTutorial()
+    },
     methods: {
+      displayTutorial() {
+        this.setCurrentInfo(this.tutorial, 'Tutorial')
+      },
       handleDrop(playerNumber, type) {
         this.droppables[type].push(playerNumber);
         this.draggables = this.draggables.filter(number => number !== playerNumber);
@@ -84,11 +92,27 @@
         this.showHeroDescription(hero)
       },
       showHeroDescription(hero) {
-        let description = '<h3>Descripción</h3>' + hero.getDescription()
-        this.setCurrentInfo(description)
+        this.setCurrentInfo(hero.getDescription(), 'Descripción')
       },
-      setCurrentInfo(info) {
-        this.info = info
+      setCurrentInfo(info, title = "") {
+        if (title) {
+          title = `<h3>${title}</h3>`
+        }
+        this.info = title + info
+      },
+      startCombat() {
+        const selection = []
+        Object.entries(this.droppables).forEach(([type, marks]) => {
+          marks.forEach(() => {
+            selection.push(type)
+          })
+        })
+
+        if (selection.length === 0) {
+          this.setCurrentInfo("Selecciona al menos un personaje, arrastrando y soltando los puntos.", "Olvidaste algo...");
+        } else {
+          router.push({name: 'combat', params: { heroes: selection }})
+        }
       }
     },
     components: {
@@ -189,6 +213,15 @@
     justify-content: center;
     align-items: center;
     min-width: 300px;
+  }
+
+  .start-button {
+    display: block;
+    width: 100px;
+    height: 100px;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
   .arrow {

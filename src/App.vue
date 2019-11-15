@@ -1,19 +1,15 @@
 <template>
   <div id="app">
-    <Combat />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import CharactersSelection from './screens/CharactersSelection.vue'
-import Combat from './screens/Combat.vue'
 
 export default {
-  name: 'app',
-  components: {
-    CharactersSelection, Combat
-  }
+  name: 'app'
 }
+
 </script>
 
 <style>

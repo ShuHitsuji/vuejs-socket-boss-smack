@@ -1,18 +1,18 @@
 <template>
   <div class="screen">
     <section class="combat-section">
-      <div class="players-area">
+      <div class="heroes-area">
         <div class="column left">
           <div class="character">
-            <Hero :instance="players[0]" :selected="isSelected(0)"/>
+            <Hero :instance="heroes[0]" :selected="isSelected(0)"/>
           </div>
         </div>
         <div class="column right">
           <div class="character">
-            <Hero :instance="players[1]" :selected="isSelected(1)"/>
+            <Hero :instance="heroes[1]" :selected="isSelected(1)"/>
           </div>
           <div class="character">
-            <Hero :instance="players[2]" :selected="isSelected(2)"/>
+            <Hero :instance="heroes[2]" :selected="isSelected(2)"/>
           </div>
         </div>
       </div>
@@ -28,8 +28,8 @@
                       v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
-        <StatusBar v-for="hero in players"
-                   :key="hero.name"
+        <StatusBar v-for="hero in heroes"
+                   :key="hero.id"
                    :label="hero.name"
                    :status="{ health: hero.health, mana: hero.mana }"
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
@@ -55,12 +55,6 @@
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
-
-  const players = [
-    createHero({name: 'Elf', type: 'ranger'}),
-    createHero({name: 'Knight', type: 'knight'}),
-    createHero({name: 'Old Mage', type: 'mage'})
-  ]
 
   const monsters = [
     new Monster({
@@ -93,12 +87,28 @@
     name: 'Combat',
     data: () => {
       return {
-        players,
+        heroes: [],
         monsters,
         currentMonster: 0,
         currentPlayer: 0,
         isMonsterTurn: false,
         lastAction: ""
+      }
+    },
+    created: function () {
+      const {heroes} = this.$route.params;
+
+      if (!heroes) {
+        // default mode, one of a kind
+        this.heroes = [
+          createHero({name: 'Elf', type: 'ranger'}),
+          createHero({name: 'Knight', type: 'knight'}),
+          createHero({name: 'Mage', type: 'mage'})
+        ]
+      } else {
+        heroes.forEach((hero, index) => {
+          this.heroes.push(createHero({ id: index, type: hero }))
+        })
       }
     },
     methods: {
@@ -159,7 +169,7 @@
         return !this.isMonsterTurn && (playerId === this.currentPlayer)
       },
       getCurrentPlayer() {
-        return this.players[this.currentPlayer]
+        return this.heroes[this.currentPlayer]
       },
       getCurrentMonster() {
         return this.monsters[this.currentMonster]
@@ -183,10 +193,10 @@
         if (this.currentMonster > this.monsters.length) {
           window.location.reload();
         }
-        for (let i = 0; i < players.length; i++) {
-          players[i].setStatus('idle');
-          players[i].health.current = players[i].health.max;
-          players[i].mana.current = players[i].mana.max;
+        for (let i = 0; i < this.heroes.length; i++) {
+          this.heroes[i].setStatus('idle');
+          this.heroes[i].health.current = this.heroes[i].health.max;
+          this.heroes[i].mana.current = this.heroes[i].mana.max;
         }
       },
       monsterAttack() {
@@ -199,13 +209,13 @@
         }, 1500)
       },
       calculateMonsterTarget(monsterDamage) {
-        let monsterTarget = this.calculateRng(0, players.length);
-        if (!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0) {
-          this.players[monsterTarget - 1].health.current -= monsterDamage;
-          this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
-          if (this.players[monsterTarget - 1].health.current <= 0) {
-            this.players[monsterTarget - 1].health.current = 0;
-            this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
+        let monsterTarget = this.calculateRng(0, this.heroes.length);
+        if (!this.checkAliveParty() && this.heroes[monsterTarget - 1].health.current > 0) {
+          this.heroes[monsterTarget - 1].health.current -= monsterDamage;
+          this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.heroes[monsterTarget - 1].name}`;
+          if (this.heroes[monsterTarget - 1].health.current <= 0) {
+            this.heroes[monsterTarget - 1].health.current = 0;
+            this.heroes[monsterTarget - 1].type.img = this.heroes[monsterTarget - 1].type.imgDeath;
           }
         } else if (!this.checkAliveParty()) {
           this.calculateMonsterTarget(monsterDamage);
@@ -222,9 +232,9 @@
         }
       },
       checkAliveParty() {
-        var partyMembers = players.length;
-        for (let i = 0; i < players.length; i++) {
-          if (players[i].health.current < 1) {
+        var partyMembers = this.heroes.length;
+        for (let i = 0; i < this.heroes.length; i++) {
+          if (this.heroes[i].health.current < 1) {
             partyMembers--;
           }
         }
@@ -289,7 +299,7 @@
     background: #555;
   }
 
-  .players-area {
+  .heroes-area {
     flex: 1;
     display: flex;
     justify-content: center;
