@@ -184,7 +184,7 @@
           window.location.reload();
         }
         for (let i = 0; i < players.length; i++) {
-          players[i].type.img = players[i].type.imgIdle;
+          players[i].setStatus('idle');
           players[i].health.current = players[i].health.max;
           players[i].mana.current = players[i].mana.max;
         }
