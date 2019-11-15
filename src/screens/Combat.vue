@@ -184,7 +184,7 @@
           this.getCurrentPlayer().setStatus('idle');
         }
         this.checkWin();
-        this.currentPlayer = (++this.currentPlayer) % 3
+        this.currentPlayer = (++this.currentPlayer) % this.heroes.length
         if (!this.checkAliveParty() && !this.checkAliveStatus()) {
           this.nextTurn();
         }
