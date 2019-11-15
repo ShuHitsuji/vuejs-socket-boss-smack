@@ -4,27 +4,28 @@
       <div class="players-area">
         <div class="column left">
           <div class="character">
-            <Hero :instance="players[0]" :selected="isSelected(0)" />
+            <Hero :instance="players[0]" :selected="isSelected(0)"/>
           </div>
         </div>
         <div class="column right">
           <div class="character">
-            <Hero :instance="players[1]" :selected="isSelected(1)" />
+            <Hero :instance="players[1]" :selected="isSelected(1)"/>
           </div>
           <div class="character">
-            <Hero :instance="players[2]" :selected="isSelected(2)" />
+            <Hero :instance="players[2]" :selected="isSelected(2)"/>
           </div>
         </div>
       </div>
       <div class="monster-area">
         <div class="monster">
-          <Boss :instance="monsters[currentMonster]" :selected="isMonsterTurn" />
+          <Boss :instance="monsters[currentMonster]" :selected="isMonsterTurn"/>
         </div>
       </div>
     </section>
     <footer class="footer">
       <aside class="actions-area">
-        <ButtonsPanel v-bind:style="{opacity: isMonsterTurn?0.35:1}" :disabled="isMonsterTurn" v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
+        <ButtonsPanel v-bind:style="{opacity: isMonsterTurn?0.35:1}" :disabled="isMonsterTurn"
+                      v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
         <StatusBar v-for="hero in players"
@@ -48,33 +49,20 @@
 <script>
   import StatusBar from "../components/StatusBar";
 
-  //import Player from '../entities/Player'
-  import Knight from '../entities/Knight'
-  import Ranger from '../entities/Ranger'
-  import Mage from '../entities/Mage'
+  import createHero from '../entities/heroFactory'
 
   import Monster from '../entities/Monster'
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
-  const heroFactory = function({name, type}){
-    if(type === 'knight'){
-      return new Knight({name, type});
-    }else if (type === 'ranger'){
-      return new Ranger({name, type});
-    }else if (type === 'mage'){
-      return new Mage({name, type});
-    }
-  }
+  const players = [
+    createHero({name: 'Elf', type: 'ranger'}),
+    createHero({name: 'Knight', type: 'knight'}),
+    createHero({name: 'Old Mage', type: 'mage'})
+  ]
 
-  const players = [  
-    heroFactory({name: 'Elf', type: 'ranger'}),
-    heroFactory({name: 'Knight', type: 'knight'}), 
-    heroFactory({name: 'Old Mage', type: 'mage'}) 
-    ]
-
-  const monsters=[
+  const monsters = [
     new Monster({
       name: 'Wisp',
       health: 250,
@@ -100,7 +88,7 @@
       type: 'tv'
     })
   ]
-  
+
   export default {
     name: 'Combat',
     data: () => {
@@ -115,57 +103,57 @@
     },
     methods: {
       playerAttacks() {
-          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgAttack;
-          setTimeout(() => {
-            this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
-          }, 500)
-          let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
-          this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
-          this.getCurrentMonster().health.current -= playerDamage;
-          this.regenMana(10);
-          if(!this.checkWin()){
-              this.monsterAttack();
-          }
-        },
+        this.getCurrentPlayer().setStatus('attack');
+        setTimeout(() => {
+          this.getCurrentPlayer().setStatus('idle');
+        }, 500)
+        let playerDamage = this.calculateRng(this.getCurrentPlayer().attack / 2, this.getCurrentPlayer().attack);
+        this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+        this.getCurrentMonster().health.current -= playerDamage;
+        this.regenMana(10);
+        if (!this.checkWin()) {
+          this.monsterAttack();
+        }
+      },
       playerHeals() {
         let manaCost = 20;
-          if(this.checkMana(manaCost)){
-              this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgHeal;
-              setTimeout(() => {
-                this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
-              }, 800)
-              let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
-              let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
-              let playerHeal = this.calculateRng(minHeal, maxHeal);
-              this.getCurrentPlayer().mana.current -= manaCost;
-              if(this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max){
-                this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
-                let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
-                this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing} hp`
-              }else{
-                this.getCurrentPlayer().health.current += playerHeal;
-                this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
-              }
-              if(!this.checkWin()){
-                this.monsterAttack();
-              }
+        if (this.checkMana(manaCost)) {
+          this.getCurrentPlayer().setStatus('heal');
+          setTimeout(() => {
+            this.getCurrentPlayer().setStatus('idle');
+          }, 800)
+          let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
+          let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
+          let playerHeal = this.calculateRng(minHeal, maxHeal);
+          this.getCurrentPlayer().mana.current -= manaCost;
+          if (this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max) {
+            this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
+            let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
+            this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing} hp`
+          } else {
+            this.getCurrentPlayer().health.current += playerHeal;
+            this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
           }
+          if (!this.checkWin()) {
+            this.monsterAttack();
+          }
+        }
       },
       playerDoSomethingSpecial() {
         let manaCost = 40;
-           if(this.checkMana(manaCost)){
-              this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgSpecial;
-              setTimeout(() => {
-                this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
-              }, 800)
-              this.getCurrentPlayer().mana.current -= manaCost;
-              let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
-              this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
-              this.getCurrentMonster().health.current -= playerDamage;
-              if(!this.checkWin()){
-                  this.monsterAttack();
-              }
-            }
+        if (this.checkMana(manaCost)) {
+          this.getCurrentPlayer().setStatus('special');
+          setTimeout(() => {
+            this.getCurrentPlayer().setStatus('idle');
+          }, 800)
+          this.getCurrentPlayer().mana.current -= manaCost;
+          let playerDamage = this.calculateRng(this.getCurrentPlayer().attack, this.getCurrentPlayer().attack * 1.5);
+          this.lastAction = `${this.getCurrentPlayer().name} dealt ${playerDamage} damage to ${this.getCurrentMonster().name}`;
+          this.getCurrentMonster().health.current -= playerDamage;
+          if (!this.checkWin()) {
+            this.monsterAttack();
+          }
+        }
       },
       isSelected(playerId) {
         return !this.isMonsterTurn && (playerId === this.currentPlayer)
@@ -173,35 +161,35 @@
       getCurrentPlayer() {
         return this.players[this.currentPlayer]
       },
-      getCurrentMonster(){
+      getCurrentMonster() {
         return this.monsters[this.currentMonster]
       },
       nextTurn() {
-        if(!this.checkAliveStatus()){
-          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgDeath;
-        }else{
-          this.getCurrentPlayer().type.img= this.getCurrentPlayer().type.imgIdle;
+        if (!this.checkAliveStatus()) {
+          this.getCurrentPlayer().setStatus('death');
+        } else {
+          this.getCurrentPlayer().setStatus('idle');
         }
         this.checkWin();
         this.currentPlayer = (++this.currentPlayer) % 3
-        if(!this.checkAliveParty() && !this.checkAliveStatus()){
+        if (!this.checkAliveParty() && !this.checkAliveStatus()) {
           this.nextTurn();
         }
       },
-      nextMonster(){
+      nextMonster() {
         this.currentMonster = ++this.currentMonster;
         this.lastAction = ``;
         this.lastMonsterAction = ``;
-        if(this.currentMonster > this.monsters.length){
+        if (this.currentMonster > this.monsters.length) {
           window.location.reload();
         }
-          for(let i = 0; i < players.length; i++){
-            players[i].type.img = players[i].type.imgIdle;
-            players[i].health.current = players[i].health.max;
-            players[i].mana.current = players[i].mana.max;
-          }
+        for (let i = 0; i < players.length; i++) {
+          players[i].type.img = players[i].type.imgIdle;
+          players[i].health.current = players[i].health.max;
+          players[i].mana.current = players[i].mana.max;
+        }
       },
-      monsterAttack(){
+      monsterAttack() {
         this.isMonsterTurn = true;
         setTimeout(() => {
           let monsterDamage = this.calculateRng(this.getCurrentMonster().attack, this.getCurrentMonster().attack * 2);
@@ -210,73 +198,73 @@
           this.nextTurn();
         }, 1500)
       },
-      calculateMonsterTarget(monsterDamage){
-          let monsterTarget = this.calculateRng(0, players.length);
-          if(!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0){
-              this.players[monsterTarget - 1].health.current -= monsterDamage;
-              this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
-              if(this.players[monsterTarget - 1].health.current <= 0){
-                this.players[monsterTarget - 1].health.current = 0;
-                this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
-              }
-            }else if(!this.checkAliveParty()){
-              this.calculateMonsterTarget(monsterDamage);
-            }
+      calculateMonsterTarget(monsterDamage) {
+        let monsterTarget = this.calculateRng(0, players.length);
+        if (!this.checkAliveParty() && this.players[monsterTarget - 1].health.current > 0) {
+          this.players[monsterTarget - 1].health.current -= monsterDamage;
+          this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.players[monsterTarget - 1].name}`;
+          if (this.players[monsterTarget - 1].health.current <= 0) {
+            this.players[monsterTarget - 1].health.current = 0;
+            this.players[monsterTarget - 1].type.img = this.players[monsterTarget - 1].type.imgDeath;
+          }
+        } else if (!this.checkAliveParty()) {
+          this.calculateMonsterTarget(monsterDamage);
+        }
       },
-      calculateRng(min,max){
-          return Math.max(Math.floor(Math.random() * max) + 1, min);
+      calculateRng(min, max) {
+        return Math.max(Math.floor(Math.random() * max) + 1, min);
       },
-      checkAliveStatus(){
-        if(this.getCurrentPlayer().health.current > 0){
+      checkAliveStatus() {
+        if (this.getCurrentPlayer().health.current > 0) {
           return true;
-        }else{
+        } else {
           return false;
         }
       },
-      checkAliveParty(){
+      checkAliveParty() {
         var partyMembers = players.length;
-        for(let i = 0; i < players.length; i++){
-          if(players[i].health.current < 1){
+        for (let i = 0; i < players.length; i++) {
+          if (players[i].health.current < 1) {
             partyMembers--;
           }
         }
-        if(partyMembers <= 0){
+        if (partyMembers <= 0) {
           return true;
         }
-          return false;
+        return false;
       },
-      checkWin(){
-        if(this.getCurrentMonster().health.current <= 0){
+      checkWin() {
+        if (this.getCurrentMonster().health.current <= 0) {
           this.getCurrentMonster().health.current = 0;
           this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
           this.isMonsterTurn = true;
-          setTimeout(()=>{
+          setTimeout(() => {
             this.isMonsterTurn = false;
             this.nextMonster();
-          },1500)
-            
-            return true;
-        }else if(this.checkAliveParty()){
-            window.location.reload()
-            return true;
+          }, 1500)
+
+          return true;
+        } else if (this.checkAliveParty()) {
+          window.location.reload()
+          return true;
         }
-            return false;
-        },
-      checkMana(manaRequired){
-          if(this.getCurrentPlayer().mana.current < manaRequired){
-              this.lastAction = `${this.getCurrentPlayer().name} doesn't have enough Mana`
-              this.lastMonsterAction = ``;
-              return false;
-          }else{
-              return true;
-          }
-        },
-        regenMana(mana){
-          this.getCurrentPlayer().mana.current += mana;
-          if(this.getCurrentPlayer().mana.current > this.getCurrentPlayer().mana.max){
-            this.getCurrentPlayer().mana.current = this.getCurrentPlayer().mana.max;
-          }
+        return false;
+      },
+      checkMana(manaRequired) {
+        if (this.getCurrentPlayer().mana.current < manaRequired) {
+          this.lastAction = `${this.getCurrentPlayer().name} doesn't have enough Mana`
+          this.lastMonsterAction = ``;
+          return false;
+        } else {
+          return true;
         }
+      },
+      regenMana(mana) {
+        this.getCurrentPlayer().mana.current += mana;
+        if (this.getCurrentPlayer().mana.current > this.getCurrentPlayer().mana.max) {
+          this.getCurrentPlayer().mana.current = this.getCurrentPlayer().mana.max;
+        }
+      }
     },
     components: {
       Hero,

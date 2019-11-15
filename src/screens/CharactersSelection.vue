@@ -6,16 +6,16 @@
       <div class="characters-container">
         <div class="character"
              v-for="hero in heroes"
-             :key="hero.keyName"
+             :key="hero.type"
              v-on:click="showHeroDescription(hero)"
         >
-          <drop @drop="(player) => { handleDrop(player, hero.keyName); }">
+          <drop @drop="(player) => { handleDrop(player, hero.type); }">
             <div class="selectors">
-              <div v-for="selector in droppables[hero.keyName]"
+              <div v-for="selector in droppables[hero.type]"
                    :key="selector"
                    class="selector"></div>
             </div>
-            <Hero :instance="hero" />
+            <Hero :instance="hero"/>
           </drop>
         </div>
       </div>
@@ -35,7 +35,7 @@
         <i v-on:click="setCurrentInfo(tutorial)">i</i>
       </aside>
       <main class="description">
-        <div class="info" v-html="info" />
+        <div class="info" v-html="info"/>
       </main>
       <nav class="start">
         <i class="arrow left"></i>
@@ -45,71 +45,56 @@
 </template>
 
 <script>
-import Hero from "../components/Hero/Hero";
-import Player from '../entities/Player'
-import { Drag, Drop } from 'vue-drag-drop';
+  import createHero from '../entities/heroFactory'
+  import Hero from '../components/Hero/Hero'
+  import {Drag, Drop} from 'vue-drag-drop';
 
-const heroes = {
-  ranger: new Player({
-    type: 'ranger',
-    health: 150,
-    mana: 60,
-    attack: 60
-  }),
-  knight: new Player({
-    type: 'knight',
-    health: 200,
-    mana: 30,
-    attack: 35
-  }),
-  mage: new Player({
-    type: 'mage',
-    health: 100,
-    mana: 100,
-    attack: 80
-  })
-}
-
-export default {
-  name: 'CharactersSelection',
-  data: () => {
-    let tutorial = '<h3>Tutorial</h3>';
-    tutorial += 'Para selección, arrastrar los puntos sobre los personajes.<br />';
-    tutorial += 'Click sobre un personaje para ver su descripción.';
-
-    return {
-      heroes,
-      selectedHero: null,
-      draggables: [1, 2, 3], // player numbers
-      droppables: {
-        ranger: [],
-        knight: [],
-        mage: [],
-      },
-      tutorial,
-      info: tutorial
-    }
-  },
-  methods: {
-    handleDrop(playerNumber, type) {
-      this.droppables[type].push(playerNumber);
-      this.draggables = this.draggables.filter(number => number !== playerNumber);
-      const hero = this.heroes[type];
-
-      this.showHeroDescription(hero)
-    },
-    showHeroDescription(hero) {
-      let description = '<h3>Descripción</h3>' + hero.getDescription()
-      this.setCurrentInfo(description)
-    },
-    setCurrentInfo(info) {
-      this.info = info
-    }
-  },
-  components: {
-    Hero, Drag, Drop
+  const heroes = {
+    ranger: createHero({type: 'ranger'}),
+    knight: createHero({type: 'knight'}),
+    mage: createHero({type: 'mage'})
   }
-}
+
+  export default {
+    name: 'CharactersSelection',
+    data: () => {
+      let tutorial = '<h3>Tutorial</h3>';
+      tutorial += 'Para selección, arrastrar los puntos sobre los personajes.<br />';
+      tutorial += 'Click sobre un personaje para ver su descripción.';
+
+      return {
+        heroes,
+        selectedHero: null,
+        draggables: [1, 2, 3], // player numbers
+        droppables: {
+          ranger: [],
+          knight: [],
+          mage: [],
+        },
+        tutorial,
+        info: tutorial
+      }
+    },
+    methods: {
+      handleDrop(playerNumber, type) {
+        this.droppables[type].push(playerNumber);
+        this.draggables = this.draggables.filter(number => number !== playerNumber);
+        const hero = this.heroes[type];
+
+        this.showHeroDescription(hero)
+      },
+      showHeroDescription(hero) {
+        let description = '<h3>Descripción</h3>' + hero.getDescription()
+        this.setCurrentInfo(description)
+      },
+      setCurrentInfo(info) {
+        this.info = info
+      }
+    },
+    components: {
+      Hero, Drag, Drop
+    }
+  }
 </script>
 
 <style scoped>
@@ -194,7 +179,7 @@ export default {
   }
 
   .info >>> h3,
-  .info >>> b{
+  .info >>> b {
     color: rgba(249, 255, 76, 0.55);
   }
 

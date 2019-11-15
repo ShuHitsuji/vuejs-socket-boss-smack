@@ -1,13 +1,4 @@
 <template>
-<!--  <div class="heroSprite">-->
-<!--    <div class="heroImage">-->
-<!--      <img v-show="currentHeroState == 'Idle'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Attacking'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Special'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Healing'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Hurt'" src="Placeholder">-->
-<!--    </div>-->
-<!--  </div>-->
   <div class="container">
     <div :class="{arrow: selected}"></div>
     <img :class="[heroClass]"
@@ -25,8 +16,8 @@
       }
     },
     computed: {
-      heroClass: function() { return this.instance.type.keyName },
-      heroImage: function() { return this.instance.type.img },
+      heroClass: function() { return this.instance.type },
+      heroImage: function() { return this.instance.getImage() },
     },
     components: {},
   }
