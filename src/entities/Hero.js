@@ -27,10 +27,6 @@ class Hero {
     return this.img[this.status]
   }
 
-  getName() {
-
-  }
-
   getDescription() {
     let description = this.description;
     description += `<br /><br />`;
