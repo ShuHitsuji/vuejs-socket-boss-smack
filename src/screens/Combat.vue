@@ -47,35 +47,33 @@
 
 <script>
   import StatusBar from "../components/StatusBar";
-  import Player from '../entities/Player'
+
+  //import Player from '../entities/Player'
+  import Knight from '../entities/Knight'
+  import Ranger from '../entities/Ranger'
+  import Mage from '../entities/Mage'
+
   import Monster from '../entities/Monster'
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
-  const players = [
-    new Player({
-      name: 'Elf',
-      type: 'ranger',
-      health: 175,
-      mana: 100,
-      attack: 60
-    }),
-    new Player({
-      name: 'Knight',
-      type: 'knight',
-      health: 250,
-      mana: 100,
-      attack: 40
-    }),
-    new Player({
-      name: 'Old Mage',
-      type: 'mage',
-      health: 150,
-      mana: 100,
-      attack: 80
-    })
-  ]
+  const heroFactory = function({name, type}){
+    if(type === 'knight'){
+      return new Knight({name, type});
+    }else if (type === 'ranger'){
+      return new Ranger({name, type});
+    }else if (type === 'mage'){
+      return new Mage({name, type});
+    }
+  }
+
+  const players = [  
+    heroFactory({name: 'Elf', type: 'ranger'}),
+    heroFactory({name: 'Knight', type: 'knight'}), 
+    heroFactory({name: 'Old Mage', type: 'mage'}) 
+    ]
+
   const monsters=[
     new Monster({
       name: 'Wisp',
@@ -102,7 +100,7 @@
       type: 'tv'
     })
   ]
-
+  
   export default {
     name: 'Combat',
     data: () => {
