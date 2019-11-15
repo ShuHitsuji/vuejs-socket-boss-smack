@@ -3,8 +3,7 @@ class Hero {
   img = {}
   description = ''
 
-  constructor({id = null, name, type, health, attack, mana}) {
-    this.id = id || type;
+  constructor({name, type, health, attack, mana}) {
     this.name = name;
     this.keyName = type;
     this.type = type;

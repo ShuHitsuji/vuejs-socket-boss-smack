@@ -13,9 +13,8 @@ class Ranger extends Hero {
 
   description = "Elfa guardabosques de los bosques de Jaspe. Armada con un arco bendecido por la diosa Elune misma, el refulgiente acero élfico de sus flechas es lo último que ven (y sienten) aquellos que osan desafiarla. De armadura ligera, los elfos consideran el metal como una debilidad de la cual disponer, prefiriendo emplear su agilidad preternatural para esquivar los golpes de sus adversarios. Un héroe con gran evasión y gran daño sostenido en el tiempo."
 
-  constructor({id, name, type}) {
+  constructor({name, type}) {
     super({
-      id,
       name,
       type,
       health: 175,

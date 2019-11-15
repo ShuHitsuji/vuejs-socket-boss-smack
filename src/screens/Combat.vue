@@ -31,8 +31,8 @@
                       v-on:attack="playerAttacks" v-on:heal="playerHeals" v-on:special="playerDoSomethingSpecial"/>
       </aside>
       <main class="status-area">
-        <StatusBar v-for="hero in heroes"
-                   :key="hero.id"
+        <StatusBar v-for="(hero, index) in heroes"
+                   :key="index"
                    :label="hero.name"
                    :status="{ health: hero.health, mana: hero.mana }"
                    :colors="{ health: '#8cdc07', mana: '#5a5adc' }"
@@ -109,8 +109,8 @@
           createHero({name: 'Mage', type: 'mage'})
         ]
       } else {
-        heroes.forEach((hero, index) => {
-          this.heroes.push(createHero({ id: index, type: hero }))
+        heroes.forEach((hero) => {
+          this.heroes.push(createHero({ type: hero }))
         })
       }
     },
