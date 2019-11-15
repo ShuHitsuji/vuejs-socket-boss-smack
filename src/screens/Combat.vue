@@ -1,5 +1,8 @@
 <template>
   <div class="screen">
+    <header class="header">
+      <h1 class="title">Boss Smack</h1>
+    </header>
     <section class="combat-section">
       <div class="heroes-area">
         <div class="column left">
@@ -292,11 +295,27 @@
     color: white;
   }
 
+  .header{
+    flex: 1;
+    width: 100%;
+    display: flex;
+    background: #333538;
+    padding: 0;
+  }
+
+  .title {
+    font-family: Flipps;
+    font-size: 40px;
+    margin: 5px;
+    color: rgba(249, 255, 76, 0.55);
+  }
+
   .combat-section {
     flex: 1;
     width: 100%;
     display: flex;
     background: #555;
+    padding-top: 10px;
   }
 
   .heroes-area {
