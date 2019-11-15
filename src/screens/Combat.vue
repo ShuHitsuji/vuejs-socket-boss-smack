@@ -301,6 +301,7 @@
     display: flex;
     background: #333538;
     padding: 0;
+    padding: 0 30px;
   }
 
   .title {
