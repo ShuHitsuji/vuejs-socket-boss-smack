@@ -1,5 +1,5 @@
 <template>
-  <div class="screen">
+  <div class="screen" draggable="false" style="-moz-user-select: none;">
     <section class="characters-selection">
       <h1 class="title">Bienvenidos al combate</h1>
       <h2 class="subtitle">Elijan sus personajes</h2>

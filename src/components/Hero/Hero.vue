@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container" draggable="false" style="-moz-user-select: none;">
     <div :class="{arrow: selected}"></div>
     <img :class="[heroClass]"
          alt="character"
-         :src="`${publicPath}/${heroImage}`" />
+         :src="`${publicPath}/${heroImage}`" draggable="false" style="-moz-user-select: none;" />
   </div>
 </template>
 
@@ -34,12 +34,14 @@
   .mage,
   .ranger {
     width:77px;
+    pointer-events: none;
     height:77px;
   }
 
   .knight {
     width:90px;
     height:90px;
+    pointer-events: none;
   }
 
   .arrow {
