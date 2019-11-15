@@ -335,5 +335,6 @@
     align-items: flex-start;
     padding: 0 15px;
     flex-direction: column;
+    color: rgba(249, 255, 76, 0.55);
   }
 </style>
