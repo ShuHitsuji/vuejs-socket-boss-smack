@@ -21,6 +21,8 @@ const types = {
   }
 }
 class Monster {
+  status = 'idle'
+
   constructor({name, health, attack, type}) {
     this.name = name;
     this.health = {
@@ -34,8 +36,16 @@ class Monster {
     this.attack = attack;
   }
 
+  setStatus(status) {
+    this.status = status
+  }
+
   isAlive() {
-    return this.health.current > 0;
+    return this.status !== 'dead' && this.health.current > 0;
+  }
+
+  getImage() {
+    return this.isAlive() ? this.type.img : this.type.imgDeath;
   }
 }
 

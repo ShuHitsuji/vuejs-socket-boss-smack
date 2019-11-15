@@ -1,13 +1,4 @@
 <template>
-<!--  <div class="bossSprite">-->
-<!--    <div class="bossImage">-->
-<!--      <img v-show="currentHeroState == 'Idle'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Attacking'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Special'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Healing'" src="Placeholder">-->
-<!--      <img v-show="currentHeroState == 'Hurt'" src="Placeholder">-->
-<!--    </div>-->
-<!--  </div>-->
   <div class="container">
     <div :class="{arrow: selected}"></div>
     <img :class="[monsterClass]"
@@ -26,7 +17,7 @@
     },
     computed: {
       monsterClass: function() { return this.instance.type.keyName },
-      monsterImage: function() { return this.instance.type.img },
+      monsterImage: function() { return this.instance.getImage() },
     },
     components: {},
   }
