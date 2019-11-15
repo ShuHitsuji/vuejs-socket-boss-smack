@@ -218,7 +218,7 @@
           this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.heroes[monsterTarget - 1].name}`;
           if (this.heroes[monsterTarget - 1].health.current <= 0) {
             this.heroes[monsterTarget - 1].health.current = 0;
-            this.heroes[monsterTarget - 1].type.img = this.heroes[monsterTarget - 1].type.imgDeath;
+            this.heroes[monsterTarget - 1].setStatus('death');
           }
         } else if (!this.checkAliveParty()) {
           this.calculateMonsterTarget(monsterDamage);
