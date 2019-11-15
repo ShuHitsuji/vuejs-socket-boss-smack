@@ -18,6 +18,10 @@ class Hero {
     this.attack = attack;
   }
 
+  isAlive() {
+    return this.health.current > 0;
+  }
+
   setStatus(status) {
     this.status = status
   }

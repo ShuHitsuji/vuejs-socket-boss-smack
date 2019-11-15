@@ -21,19 +21,22 @@ const types = {
   }
 }
 class Monster {
-    constructor({ name, health, attack, type}) {
-      this.name = name;
-      this.health = {
-        max: health,
-        current: health
-      }
-      this.type = {
-        keyName: type,
-        ...types[type]
-      }
-      this.attack = attack;
+  constructor({name, health, attack, type}) {
+    this.name = name;
+    this.health = {
+      max: health,
+      current: health
     }
+    this.type = {
+      keyName: type,
+      ...types[type]
+    }
+    this.attack = attack;
   }
-  
+
+  isAlive() {
+    return this.health.current > 0;
+  }
+}
+
   export default Monster;
-  

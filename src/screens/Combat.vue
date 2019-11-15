@@ -213,10 +213,10 @@
       },
       calculateMonsterTarget(monsterDamage) {
         let monsterTarget = this.calculateRng(0, this.heroes.length);
-        if (!this.checkAliveParty() && this.heroes[monsterTarget - 1].health.current > 0) {
+        if (!this.checkAliveParty() && this.heroes[monsterTarget - 1].isAlive()) {
           this.heroes[monsterTarget - 1].health.current -= monsterDamage;
           this.lastAction = `${this.getCurrentMonster().name} dealt ${monsterDamage} damage to ${this.heroes[monsterTarget - 1].name}`;
-          if (this.heroes[monsterTarget - 1].health.current <= 0) {
+          if (!this.heroes[monsterTarget - 1].isAlive()) {
             this.heroes[monsterTarget - 1].health.current = 0;
             this.heroes[monsterTarget - 1].setStatus('death');
           }
@@ -228,16 +228,12 @@
         return Math.max(Math.floor(Math.random() * max) + 1, min);
       },
       checkAliveStatus() {
-        if (this.getCurrentPlayer().health.current > 0) {
-          return true;
-        } else {
-          return false;
-        }
+        return this.getCurrentPlayer().isAlive();
       },
       checkAliveParty() {
-        var partyMembers = this.heroes.length;
+        let partyMembers = this.heroes.length;
         for (let i = 0; i < this.heroes.length; i++) {
-          if (this.heroes[i].health.current < 1) {
+          if (!this.heroes[i].isAlive()) {
             partyMembers--;
           }
         }
@@ -247,7 +243,7 @@
         return false;
       },
       checkWin() {
-        if (this.getCurrentMonster().health.current <= 0) {
+        if (!this.getCurrentMonster().isAlive()) {
           this.getCurrentMonster().health.current = 0;
           this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
           this.isMonsterTurn = true;
