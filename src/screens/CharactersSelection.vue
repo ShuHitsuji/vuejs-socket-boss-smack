@@ -169,9 +169,9 @@
   .selector {
     background: #9fa7ad;
     border-radius: 50%;
-    height: 10px;
-    width: 10px;
-    margin: 10px;
+    height: 20px;
+    width: 20px;
+    margin: 20px;
   }
 
   .footer {
