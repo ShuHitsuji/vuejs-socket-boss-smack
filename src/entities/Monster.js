@@ -37,11 +37,14 @@ class Monster {
   }
 
   setStatus(status) {
+    if (status === 'death') {
+      this.health.current = 0
+    }
     this.status = status
   }
 
   isAlive() {
-    return this.status !== 'dead' && this.health.current > 0;
+    return this.status !== 'death' && this.health.current > 0;
   }
 
   getImage() {

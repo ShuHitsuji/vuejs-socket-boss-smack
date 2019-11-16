@@ -57,8 +57,6 @@
     created: function () {
       const {heroes, monster, nextMonsterIndex} = this.$route.params;
 
-      monster.setStatus('dead');
-
       this.heroes = heroes;
       this.monster = monster;
       this.nextMonster = nextMonsterIndex;
@@ -134,6 +132,8 @@
     text-align: right;
     display: flex;
     justify-content: center;
+    position: relative;
+    top: -30px;
   }
 
   .footer-content {

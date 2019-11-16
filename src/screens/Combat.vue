@@ -113,6 +113,9 @@
       } else {
         this.heroes = heroes;
 
+        this.resetScene();
+        this.resetHeroes();
+
         if (monster) {
           this.currentMonster = monster;
         }
@@ -246,36 +249,35 @@
       },
       checkWin() {
         const isMonsterDead = !this.getCurrentMonster().isAlive();
-        if (isMonsterDead) {
-          this.getCurrentMonster().health.current = 0;
-          this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
 
-          this.resetScene();
+        if (isMonsterDead) {
           this.declareVictory();
+          return true;
         } else if (this.checkAliveParty()) {
           window.location.reload()
-          return true;
         }
         return false;
       },
       declareVictory() {
-        this.resetHeroes();
+        const monster = monsters[this.currentMonster];
+        monster.setStatus('death');
 
-        const monsterIndex = this.currentMonster;
-        const nextMonsterIndex = ++this.currentMonster;
+        const nextMonsterIndex = this.currentMonster + 1;
         if (nextMonsterIndex > this.monsters.length) {
-          // super end
+          // TODO: real end screen
           window.location.reload();
         }
 
-        router.push({
-          name: 'victory',
-          params: {
-            heroes: this.heroes,
-            monster: monsters[monsterIndex],
-            nextMonsterIndex,
-          }
-        })
+        setTimeout(() => {
+          router.push({
+            name: 'victory',
+            params: {
+              heroes: this.heroes,
+              monster,
+              nextMonsterIndex,
+            }
+          });
+        }, 1200)
       },
       checkMana(manaRequired) {
         if (this.getCurrentPlayer().mana.current < manaRequired) {

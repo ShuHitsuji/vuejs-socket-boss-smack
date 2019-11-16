@@ -7,7 +7,6 @@ const routes = [
   {path: '/characters-selection', component: CharactersSelection},
   {path: '/combat', name: 'combat', component: Combat},
   {path: '/victory', name: 'victory', component: Victory},
-  {path: '/combat', name: 'combat', component: Combat},
   {path: '/', component: CharactersSelection}
 ]
 
