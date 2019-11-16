@@ -31,6 +31,13 @@
     position: relative;
   }
 
+  .unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   .mage,
   .ranger {
     width:77px;
