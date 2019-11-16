@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container unselectable">
     <div :class="{arrow: selected}"></div>
     <img :class="[monsterClass]"
          alt="boss"
@@ -31,6 +31,14 @@
     align-items: center;
     position: relative;
   }
+
+  .unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   .boss {
     width:128px;
     height:128px;
