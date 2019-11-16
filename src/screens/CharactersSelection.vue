@@ -1,5 +1,5 @@
 <template>
-  <div class="screen" draggable="false" style="-moz-user-select: none;">
+  <div class="screen unselectable" draggable="false">
     <section class="characters-selection">
       <h1 class="title">Bienvenidos al combate</h1>
       <h2 class="subtitle">Elijan sus personajes</h2>
@@ -141,6 +141,13 @@
     color: rgba(249, 255, 76, 0.55);
   }
 
+  .unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
   .characters-selection {
     flex: 1;
     width: 100%;

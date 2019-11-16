@@ -1,9 +1,9 @@
 <template>
-  <div class="container" draggable="false" style="-moz-user-select: none;">
+  <div class="container unselectable" draggable="false" >
     <div :class="{arrow: selected}"></div>
     <img :class="[heroClass]"
          alt="character"
-         :src="`${publicPath}/${heroImage}`" draggable="false" style="-moz-user-select: none;" />
+         :src="`${publicPath}/${heroImage}`" draggable="false" />
   </div>
 </template>
 
