@@ -111,7 +111,8 @@
         if (selection.length === 0) {
           this.setCurrentInfo("Selecciona al menos un personaje, arrastrando y soltando los puntos.", "Olvidaste algo...");
         } else {
-          router.push({name: 'combat', params: { heroes: selection }})
+          const heroes = selection.map((type) => createHero({type}))
+          router.push({name: 'combat', params: { heroes }})
         }
       }
     },

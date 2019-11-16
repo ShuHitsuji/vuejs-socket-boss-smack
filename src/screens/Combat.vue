@@ -50,6 +50,8 @@
 </template>
 
 <script>
+  import {router} from '../router'
+
   import StatusBar from "../components/StatusBar";
 
   import createHero from '../entities/heroFactory'
@@ -99,7 +101,7 @@
       }
     },
     created: function () {
-      const {heroes} = this.$route.params;
+      const {heroes, monster} = this.$route.params;
 
       if (!heroes) {
         // default mode, one of a kind
@@ -109,9 +111,11 @@
           createHero({name: 'Mage', type: 'mage'})
         ]
       } else {
-        heroes.forEach((hero) => {
-          this.heroes.push(createHero({ type: hero }))
-        })
+        this.heroes = heroes;
+
+        if (monster) {
+          this.currentMonster = monster;
+        }
       }
     },
     methods: {
@@ -189,13 +193,11 @@
           this.nextTurn();
         }
       },
-      nextMonster() {
-        this.currentMonster = ++this.currentMonster;
+      resetScene() {
         this.lastAction = ``;
         this.lastMonsterAction = ``;
-        if (this.currentMonster > this.monsters.length) {
-          window.location.reload();
-        }
+      },
+      resetHeroes() {
         for (let i = 0; i < this.heroes.length; i++) {
           this.heroes[i].setStatus('idle');
           this.heroes[i].health.current = this.heroes[i].health.max;
@@ -243,21 +245,37 @@
         return false;
       },
       checkWin() {
-        if (!this.getCurrentMonster().isAlive()) {
+        const isMonsterDead = !this.getCurrentMonster().isAlive();
+        if (isMonsterDead) {
           this.getCurrentMonster().health.current = 0;
           this.getCurrentMonster().type.img = this.getCurrentMonster().type.imgDeath;
-          this.isMonsterTurn = true;
-          setTimeout(() => {
-            this.isMonsterTurn = false;
-            this.nextMonster();
-          }, 1500)
 
-          return true;
+          this.resetScene();
+          this.declareVictory();
         } else if (this.checkAliveParty()) {
           window.location.reload()
           return true;
         }
         return false;
+      },
+      declareVictory() {
+        this.resetHeroes();
+
+        const monsterIndex = this.currentMonster;
+        const nextMonsterIndex = ++this.currentMonster;
+        if (nextMonsterIndex > this.monsters.length) {
+          // super end
+          window.location.reload();
+        }
+
+        router.push({
+          name: 'victory',
+          params: {
+            heroes: this.heroes,
+            monster: monsters[monsterIndex],
+            nextMonsterIndex,
+          }
+        })
       },
       checkMana(manaRequired) {
         if (this.getCurrentPlayer().mana.current < manaRequired) {
@@ -291,7 +309,7 @@
     color: white;
   }
 
-  .header{
+  .header {
     flex: 1;
     width: 100%;
     display: flex;
