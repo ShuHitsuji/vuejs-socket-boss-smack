@@ -88,6 +88,12 @@
     })
   ]
 
+  const defaultHeroes = [
+    createHero({name: 'Elf', type: 'ranger'}),
+    createHero({name: 'Knight', type: 'knight'}),
+    createHero({name: 'Mage', type: 'mage'})
+  ]
+
   export default {
     name: 'Combat',
     data: () => {
@@ -105,11 +111,7 @@
 
       if (!heroes) {
         // default mode, one of a kind
-        this.heroes = [
-          createHero({name: 'Elf', type: 'ranger'}),
-          createHero({name: 'Knight', type: 'knight'}),
-          createHero({name: 'Mage', type: 'mage'})
-        ]
+        this.heroes = defaultHeroes;
       } else {
         this.heroes = heroes;
 

@@ -177,7 +177,7 @@
 
   .footer {
     display: flex;
-    min-height: 300px;
+    min-height: 280px;
     background: #333;
     justify-content: space-between;
   }
