@@ -120,22 +120,12 @@
       playerHeals() {
         let manaCost = 20;
         if (this.checkMana(manaCost)) {
-          this.getCurrentPlayer().setStatus('heal');
-          setTimeout(() => {
-            this.getCurrentPlayer().setStatus('idle');
-          }, 800)
-          let minHeal = Math.round(this.getCurrentPlayer().health.max * 0.15);
-          let maxHeal = Math.round((this.getCurrentPlayer().health.max * 0.15) + (this.getCurrentPlayer().attack / 2));
-          let playerHeal = this.getRandomValue(minHeal, maxHeal);
-          this.getCurrentPlayer().mana.current -= manaCost;
-          if (this.getCurrentPlayer().health.current + playerHeal > this.getCurrentPlayer().health.max) {
-            this.getCurrentPlayer().health.current = this.getCurrentPlayer().health.max;
-            let calculateHealing = playerHeal - (this.getCurrentPlayer().health.current - this.getCurrentPlayer().health.max);
-            this.lastAction = `${this.getCurrentPlayer().name} heals ${calculateHealing} hp`
-          } else {
-            this.getCurrentPlayer().health.current += playerHeal;
-            this.lastAction = `${this.getCurrentPlayer().name} heals ${playerHeal} hp`
-          }
+          const player = this.getCurrentPlayer();
+          
+          const playerHeal = player.healMyselft();
+
+          this.lastAction = `${player.name} heals ${playerHeal} hp`
+
           if (!this.isGameOver()) {
             this.monsterAttacks();
           }

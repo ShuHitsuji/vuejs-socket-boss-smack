@@ -51,6 +51,32 @@ class Hero {
     return playerDamage;
   }
 
+  healMyselft(){
+    let manaCost = 20;
+    let calculateHealing = 0;
+      
+    this.setStatus('heal');
+    setTimeout(() => {
+      this.setStatus('idle');
+    }, 800)
+
+    this.mana.current -= manaCost;
+    let minHeal = Math.round(this.health.max * 0.15);
+    let maxHeal = Math.round((this.health.max * 0.15) + this.attack);
+
+    let playerHeal = getRandomValue(minHeal, maxHeal);
+
+    if (this.health.current + playerHeal > this.health.max) {
+      this.health.current = this.health.max;
+      calculateHealing = playerHeal - (this.health.current - this.health.max);
+    } else {
+      this.health.current += playerHeal;
+      calculateHealing = playerHeal;
+    }
+
+    return calculateHealing;
+  }
+  
   doSomethingSpecialToMonster(monster) {
     let manaCost = 40;
 
