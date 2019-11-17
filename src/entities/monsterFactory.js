@@ -1,7 +1,7 @@
-import Wisp from "./Wisp";
-import Slime from "./Slime";
-import Fishlett from "./Fishlett";
-import TheHand from "./TheHand"
+import Wisp from "./monsters/Wisp";
+import Slime from "./monsters/Slime";
+import Fishlett from "./monsters/Fishlett";
+import TheHand from "./monsters/TheHand"
 
 const types = {
   wisp: Wisp,

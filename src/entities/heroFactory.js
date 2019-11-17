@@ -1,6 +1,6 @@
-import Ranger from "./Ranger";
-import Knight from "./Knight";
-import Mage from "./Mage";
+import Ranger from "./heroes/Ranger";
+import Knight from "./heroes/Knight";
+import Mage from "./heroes/Mage";
 
 const types = {
   ranger: Ranger,

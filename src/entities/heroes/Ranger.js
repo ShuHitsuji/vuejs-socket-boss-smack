@@ -1,4 +1,4 @@
-import Hero from "./Hero.js"
+import Hero from "../Hero.js"
 
 class Ranger extends Hero {
   img = {

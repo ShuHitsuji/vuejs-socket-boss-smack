@@ -1,4 +1,4 @@
-import Monster from "./Monster.js"
+import Monster from "../Monster.js"
 
 class Slime extends Monster{
     img = {

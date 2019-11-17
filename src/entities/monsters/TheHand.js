@@ -1,4 +1,4 @@
-import Monster from "./Monster.js"
+import Monster from "../Monster.js"
 
 class TheHand extends Monster{
     img = {
