@@ -32,7 +32,9 @@
     </section>
     <footer class="footer">
       <aside class="tutorial">
-        <i v-on:click="displayTutorial()">i</i>
+        <button class="transparent-button" v-on:click="displayTutorial()">
+          <i>info</i>
+        </button>
       </aside>
       <main class="description">
         <div class="info" v-html="info"/>
@@ -147,7 +149,7 @@
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .characters-selection {
     flex: 1;
     width: 100%;
@@ -194,8 +196,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
     min-width: 300px;
+  }
+
+  .transparent-button {
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-family: PressStart;
+    cursor: pointer;
   }
 
   .description {
