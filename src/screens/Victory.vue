@@ -165,6 +165,8 @@
     background: none;
     border: none;
     cursor: pointer;
+    position: relative;
+    top: 16px;
   }
 
   .arrow {
