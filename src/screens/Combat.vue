@@ -100,7 +100,7 @@
         this.resetHeroes();
 
         if (monster) {
-          this.currentMonster = monster;
+          this.currentMonster = monsters.indexOf(monster);
         }
       }
     },
@@ -257,7 +257,7 @@
             params: {
               heroes: this.heroes,
               monster,
-              nextMonsterIndex,
+              nextMonster: monsters[nextMonsterIndex]
             }
           });
         }, 1200)

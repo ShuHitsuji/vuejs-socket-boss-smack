@@ -47,6 +47,17 @@
   import Boss from "../components/Boss/Boss";
   import {router} from '../router'
 
+  import createHero from '../entities/heroFactory'
+  import createMonster from  '../entities/monsterFactory'
+
+  const defaultHeroes = [
+    createHero({name: 'Elf', type: 'ranger'}),
+    createHero({name: 'Knight', type: 'knight'}),
+    createHero({name: 'Mage', type: 'mage'})
+  ]
+
+  const defaultMonster = createMonster({type: 'wisp'})
+
   export default {
     name: 'Victory',
     data() {
@@ -55,11 +66,11 @@
       }
     },
     created: function () {
-      const {heroes, monster, nextMonsterIndex} = this.$route.params;
+      const {heroes, monster, nextMonster} = this.$route.params;
 
-      this.heroes = heroes;
-      this.monster = monster;
-      this.nextMonster = nextMonsterIndex;
+      this.heroes = heroes || defaultHeroes;
+      this.monster = monster || defaultMonster;
+      this.nextMonster = nextMonster || null;
     },
     methods: {
       nextCombat() {
