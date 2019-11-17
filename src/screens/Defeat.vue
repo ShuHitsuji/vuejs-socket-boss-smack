@@ -62,6 +62,7 @@
         })
       },
       retry() {
+        this.monster.health.current = this.monster.health.max;
         router.push({
           name: 'combat', params: {
             heroes: this.heroes,
