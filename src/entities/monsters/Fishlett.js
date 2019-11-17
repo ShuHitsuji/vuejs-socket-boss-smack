@@ -13,7 +13,7 @@ class Fishlett extends Monster{
         super({
             name: 'Fishlett',
             health: 700,
-            attack: 20,
+            attack: 30,
             type: 'fish'
         })
     }
