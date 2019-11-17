@@ -1,3 +1,5 @@
+import {getRandomValue} from "../utils/numbers";
+
 class Hero {
   status = 'idle'
   img = {}
@@ -41,7 +43,7 @@ class Hero {
       this.setStatus('idle');
     }, 500)
 
-    let playerDamage = this.getRandomValue(this.attack / 2, this.attack);
+    let playerDamage = getRandomValue(this.attack / 2, this.attack);
     monster.receiveDamage(playerDamage);
 
     this.regenerateMana()
@@ -58,7 +60,7 @@ class Hero {
     }, 800)
 
     this.mana.current -= manaCost;
-    let playerDamage = this.getRandomValue(this.attack, this.attack * 1.5);
+    let playerDamage = getRandomValue(this.attack, this.attack * 1.5);
     monster.receiveDamage(playerDamage);
 
     return playerDamage;
@@ -69,10 +71,6 @@ class Hero {
     if (this.mana.current > this.mana.max) {
       this.mana.current = this.mana.max;
     }
-  }
-
-  getRandomValue(min, max) {
-    return Math.max(Math.floor(Math.random() * max) + 1, min);
   }
 
   getImage() {

@@ -1,3 +1,5 @@
+import {getRandomValue} from "../utils/numbers";
+
 class Monster {
   status = 'idle'
   img = {}
@@ -42,7 +44,7 @@ class Monster {
       this.setStatus('idle');
     }, 500)
     let target = this.chooseRandomVictim(heroes);
-    let monsterDamage = this.getRandomValue(this.attack, this.attack * 2);
+    let monsterDamage = getRandomValue(this.attack, this.attack * 2);
 
     target.receiveDamage(monsterDamage);
 
@@ -55,10 +57,6 @@ class Monster {
   chooseRandomVictim(heroes) {
     const index = Math.max(Math.floor(Math.random() * 3));
     return (heroes[index].isAlive()) ? heroes[index] : this.chooseRandomVictim(heroes)
-  }
-
-  getRandomValue(min, max) {
-    return Math.max(Math.floor(Math.random() * max) + 1, min);
   }
 }
 
