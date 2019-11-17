@@ -3,6 +3,7 @@ import Monster from "./Monster.js"
 class Slime extends Monster{
     img = {
         idle: "slime.png",
+        attack: "slime-attack.png",
         death: "slime-death.png"
     }
 

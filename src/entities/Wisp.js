@@ -3,6 +3,7 @@ import Monster from "./Monster.js"
 class Wisp extends Monster{
     img = {
         idle: "wisp.png",
+        attack: "wisp-attack.png",
         death: "wisp-death.png"
     }
 

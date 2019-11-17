@@ -3,6 +3,7 @@ import Monster from "./Monster.js"
 class Fishlett extends Monster{
     img = {
         idle: "fish.png",
+        attack: "fish-attack.png",
         death: "fish-death.png"
     }
 

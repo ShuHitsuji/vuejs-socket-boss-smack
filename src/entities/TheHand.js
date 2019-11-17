@@ -3,6 +3,7 @@ import Monster from "./Monster.js"
 class TheHand extends Monster{
     img = {
         idle: "tv.png",
+        attack: "tv-attack.png",
         death: "tv-death.png"
     }
 
