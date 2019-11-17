@@ -51,9 +51,9 @@
   import createMonster from  '../entities/monsterFactory'
 
   const defaultHeroes = [
-    createHero({name: 'Elf', type: 'ranger'}),
-    createHero({name: 'Knight', type: 'knight'}),
-    createHero({name: 'Mage', type: 'mage'})
+    createHero({type: 'ranger'}),
+    createHero({type: 'knight'}),
+    createHero({type: 'mage'})
   ]
 
   const defaultMonster = createMonster({type: 'wisp'})

@@ -33,6 +33,7 @@
     <footer class="footer">
       <aside class="tutorial">
         <button class="transparent-button" v-on:click="displayTutorial()">
+
           <i>info</i>
         </button>
       </aside>
@@ -203,7 +204,7 @@
     border: none;
     outline: none;
     background: none;
-    color: white;
+    color: #bfb8b9;
     font-family: PressStart;
     cursor: pointer;
   }

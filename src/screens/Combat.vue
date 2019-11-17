@@ -100,7 +100,7 @@
         this.resetHeroes();
 
         if (monster) {
-          this.currentMonster = monsters.indexOf(monster);
+          this.currentMonster = monsters.findIndex(({name}) => name === monster.name);
         }
       }
     },
