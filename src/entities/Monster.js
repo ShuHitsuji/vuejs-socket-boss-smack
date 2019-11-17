@@ -24,7 +24,7 @@ class Monster {
   }
 
   getImage() {
-    return this.isAlive() ? this.img.idle : this.img.death;
+    return this.img[this.status];
   }
 
   receiveDamage(amount) {
@@ -37,6 +37,10 @@ class Monster {
   }
 
   attackRandomHero(heroes) {
+    this.setStatus('attack');
+    setTimeout(() => {
+      this.setStatus('idle');
+    }, 500)
     let target = this.chooseRandomVictim(heroes);
     let monsterDamage = this.getRandomValue(this.attack, this.attack * 2);
 
