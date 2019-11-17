@@ -1,27 +1,6 @@
-const types = {
-  wisp: {
-    name: "Wisp",
-    img: "wisp.png",
-    imgDeath: "wisp-death.png"
-  },
-  slime: {
-    name: "Slime",
-    img: "slime.png",
-    imgDeath: "slime-death.png"
-  },
-  fish: {
-    name: "Fish",
-    img: "fish.png",
-    imgDeath: "fish-death.png"
-  },
-  tv: {
-    name: "Tv",
-    img: "tv.png",
-    imgDeath: "tv-death.png"
-  }
-}
 class Monster {
   status = 'idle'
+  img = {}
 
   constructor({name, health, attack, type}) {
     this.name = name;
@@ -29,10 +8,7 @@ class Monster {
       max: health,
       current: health
     }
-    this.type = {
-      keyName: type,
-      ...types[type]
-    }
+    this.type = type;
     this.attack = attack;
   }
 
@@ -48,7 +24,7 @@ class Monster {
   }
 
   getImage() {
-    return this.isAlive() ? this.type.img : this.type.imgDeath;
+    return this.isAlive() ? this.img.idle : this.img.death;
   }
 }
 

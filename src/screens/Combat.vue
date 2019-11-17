@@ -56,36 +56,17 @@
 
   import createHero from '../entities/heroFactory'
 
-  import Monster from '../entities/Monster'
+  import createMonster from  '../entities/monsterFactory'
+
   import ButtonsPanel from '../components/ButtonsPanel'
   import Hero from "../components/Hero/Hero";
   import Boss from "../components/Boss/Boss";
 
   const monsters = [
-    new Monster({
-      name: 'Wisp',
-      health: 250,
-      attack: 45,
-      type: 'wisp'
-    }),
-    new Monster({
-      name: 'Badass Slime',
-      health: 525,
-      attack: 25,
-      type: 'slime'
-    }),
-    new Monster({
-      name: 'Fishlett',
-      health: 700,
-      attack: 20,
-      type: 'fish'
-    }),
-    new Monster({
-      name: 'The hand',
-      health: 999,
-      attack: 25,
-      type: 'tv'
-    })
+    createMonster({type: 'wisp'}),
+    createMonster({type: 'slime'}),
+    createMonster({type: 'fish'}),
+    createMonster({type: 'tv'})
   ]
 
   const defaultHeroes = [
