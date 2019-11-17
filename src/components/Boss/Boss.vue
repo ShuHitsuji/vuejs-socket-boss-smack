@@ -16,7 +16,7 @@
       }
     },
     computed: {
-      monsterClass: function() { return this.instance.type.keyName },
+      monsterClass: function() { return this.instance.type },
       monsterImage: function() { return this.instance.getImage() },
     },
     components: {},
