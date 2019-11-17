@@ -26,8 +26,63 @@ class Hero {
     this.status = status
   }
 
+  receiveDamage(amount) {
+    this.health.current -= amount;
+
+    if (!this.isAlive()) {
+      this.health.current = 0;
+      this.setStatus('death');
+    }
+  }
+
+  attackMonster(monster) {
+    this.setStatus('attack');
+    setTimeout(() => {
+      this.setStatus('idle');
+    }, 500)
+
+    let playerDamage = this.getRandomValue(this.attack / 2, this.attack);
+    monster.receiveDamage(playerDamage);
+
+    this.regenerateMana()
+
+    return playerDamage;
+  }
+
+  doSomethingSpecialToMonster(monster) {
+    let manaCost = 40;
+
+    this.setStatus('special');
+    setTimeout(() => {
+      this.setStatus('idle');
+    }, 800)
+
+    this.mana.current -= manaCost;
+    let playerDamage = this.getRandomValue(this.attack, this.attack * 1.5);
+    monster.receiveDamage(playerDamage);
+
+    return playerDamage;
+  }
+
+  regenerateMana() {
+    this.mana.current += 10;
+    if (this.mana.current > this.mana.max) {
+      this.mana.current = this.mana.max;
+    }
+  }
+
+  getRandomValue(min, max) {
+    return Math.max(Math.floor(Math.random() * max) + 1, min);
+  }
+
   getImage() {
     return this.img[this.status]
+  }
+
+  reset() {
+    this.setStatus('idle');
+    this.health.current = this.health.max;
+    this.mana.current = this.mana.max;
   }
 
   getDescription() {
