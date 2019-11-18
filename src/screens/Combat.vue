@@ -122,7 +122,7 @@
         if (this.checkMana(manaCost)) {
           const player = this.getCurrentPlayer();
 
-          const playerHeal = player.healMyselft();
+          const playerHeal = player.heal();
 
           this.lastAction = `${player.name} heals ${playerHeal} hp`
 
@@ -224,7 +224,7 @@
         monster.setStatus('death');
 
         const nextMonsterIndex = this.currentMonster + 1;
-        const noMonstersLeft = nextMonsterIndex === this.monsters.length
+        const noMonstersLeft = nextMonsterIndex === this.monsters.length;
 
         setTimeout(() => {
           router.push({

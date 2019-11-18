@@ -51,10 +51,10 @@ class Hero {
     return playerDamage;
   }
 
-  healMyselft(){
+  heal(){
     let manaCost = 20;
     let calculateHealing = 0;
-      
+
     this.setStatus('heal');
     setTimeout(() => {
       this.setStatus('idle');
