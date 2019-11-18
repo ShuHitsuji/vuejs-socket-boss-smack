@@ -5,9 +5,11 @@
     </header>
 
     <div class="content">
-      <div class="victory">
-        <div class="monster">
-          <Boss :instance="monster"/>
+      <div class="gameover">
+        <div>
+          <img class="image"
+               alt="gameover"
+               :src="`${publicPath}/screens/victory-screen.png`"/>
         </div>
         <h1 class="title">Victory!</h1>
       </div>
@@ -26,12 +28,11 @@
 
     <footer class="footer">
       <div class="footer-content">
-        
 
         <nav class="start">
-          <button class="start-button">
-            <i class="arrow left" v-on:click="nextCombat()"></i>
-          </button>
+          <button class="button restart-button" v-on:click="newGame()">
+          <i class="left">Nuevo juego</i>
+        </button>
         </nav>
       </div>
     </footer>
@@ -40,7 +41,6 @@
 
 <script>
   import Hero from "../components/Hero/Hero";
-  import Boss from "../components/Boss/Boss";
   import {router} from '../router'
 
   import createHero from '../entities/heroFactory'
@@ -55,31 +55,27 @@
   const defaultMonster = createMonster({type: 'wisp'})
 
   export default {
-    name: 'Victory',
+    name: 'GameOver',
     data() {
       return {
         publicPath: process.env.BASE_URL + 'assets/',
       }
     },
-    created: function () {
-      const {heroes, monster, nextMonster} = this.$route.params;
+     created: function () {
+      const {heroes, monster} = this.$route.params;
 
       this.heroes = heroes || defaultHeroes;
       this.monster = monster || defaultMonster;
-      this.nextMonster = nextMonster || null;
     },
     methods: {
-      nextCombat() {
+      newGame() {
         router.push({
-          name: 'combat', params: {
-            heroes: this.heroes,
-            monster: this.nextMonster
-          }
+          name: 'characters-selection'
         })
       }
     },
     components: {
-      Hero, Boss
+      Hero
     }
   }
 </script>
@@ -115,13 +111,13 @@
     max-width: 700px;
   }
 
-  .victory {
+  .gameover {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .victory >>> .title {
+  .gameover >>> .title {
     font-family: Flipps;
     font-size: 40px;
     margin: 5px;
@@ -141,6 +137,7 @@
     justify-content: center;
     position: relative;
     top: -30px;
+    height: 160px;
   }
 
   .footer-content {
@@ -148,10 +145,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  .monster {
-    opacity: 70%;
   }
 
   .start-button {
@@ -165,31 +158,29 @@
     top: 16px;
   }
 
-  .arrow {
-    border: solid #a97171;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    vertical-align: middle;
-    -webkit-animation: action 1s infinite alternate;
-    animation: action .7s infinite alternate;
+  .actions {
+    display: flex;
+    width: 400px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
   }
 
-  @-webkit-keyframes action {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-5px);
-    }
+  .button {
+    border: none;
+    outline: none;
+    background: none;
+    color: #b7b0b1;
+    font-family: PressStart;
+    cursor: pointer;
+    display: block;
+    text-align:center;
   }
 
-  @keyframes action {
-    0% {
-      transform: rotate(-45deg) scale(5) translateX(0);
-    }
-    100% {
-      transform: rotate(-45deg) scale(5) translateX(-2px) translateY(-2px);
-    }
+  .button:hover {
+    color: #bfb8b9;
   }
+
+  
+
 </style>

@@ -33,8 +33,8 @@ class Monster {
     this.health.current -= amount;
 
     if (!this.isAlive()) {
-      this.health.current = 0;
       this.setStatus('death');
+      this.health.current = 0;
     }
   }
 

@@ -121,7 +121,7 @@
         let manaCost = 20;
         if (this.checkMana(manaCost)) {
           const player = this.getCurrentPlayer();
-          
+
           const playerHeal = player.healMyselft();
 
           this.lastAction = `${player.name} heals ${playerHeal} hp`
@@ -221,29 +221,37 @@
         return false;
       },
       declareVictory() {
-        const monster = monsters[this.currentMonster];
+        const monster = this.getCurrentMonster();
         monster.setStatus('death');
 
         const nextMonsterIndex = this.currentMonster + 1;
-        if (nextMonsterIndex > this.monsters.length) {
-          // TODO: real end screen
-          window.location.reload();
+        if (nextMonsterIndex == this.monsters.length) {
+          setTimeout(() => {
+            router.push({
+              name: 'gameover',
+              params: {
+                heroes: this.heroes,
+                monster
+              }
+            });
+          }, 1500)
+        }else{
+          setTimeout(() => {
+            router.push({
+              name: 'victory',
+              params: {
+                heroes: this.heroes,
+                monster,
+                nextMonster: monsters[nextMonsterIndex]
+              }
+            });
+        }, 1500)
         }
 
-        setTimeout(() => {
-          router.push({
-            name: 'victory',
-            params: {
-              heroes: this.heroes,
-              monster,
-              nextMonster: monsters[nextMonsterIndex]
-            }
-          });
-        }, 1200)
+        
       },
       declareDefeat() {
         const monster = monsters[this.currentMonster];
-        monster.setStatus('death');
 
         setTimeout(() => {
           router.push({
@@ -253,7 +261,7 @@
               monster
             }
           });
-        }, 1200)
+        }, 1500)
       },
       checkMana(manaRequired) {
         if (this.getCurrentPlayer().mana.current < manaRequired) {
