@@ -190,9 +190,6 @@
           this.nextTurn();
         }, 1500)
       },
-      getRandomValue(min, max) {
-        return Math.max(Math.floor(Math.random() * max) + 1, min);
-      },
       isCurrentPlayerAlive() {
         return this.getCurrentPlayer().isAlive();
       },
@@ -221,34 +218,24 @@
         return false;
       },
       declareVictory() {
+        this.resetHeroes();
+
         const monster = this.getCurrentMonster();
         monster.setStatus('death');
 
         const nextMonsterIndex = this.currentMonster + 1;
-        if (nextMonsterIndex == this.monsters.length) {
-          setTimeout(() => {
-            router.push({
-              name: 'gameover',
-              params: {
-                heroes: this.heroes,
-                monster
-              }
-            });
-          }, 1500)
-        }else{
-          setTimeout(() => {
-            router.push({
-              name: 'victory',
-              params: {
-                heroes: this.heroes,
-                monster,
-                nextMonster: monsters[nextMonsterIndex]
-              }
-            });
-        }, 1500)
-        }
+        const noMonstersLeft = nextMonsterIndex === this.monsters.length
 
-        
+        setTimeout(() => {
+          router.push({
+            name: noMonstersLeft ? 'gameover' : 'victory',
+            params: {
+              heroes: this.heroes,
+              monster,
+              nextMonster: noMonstersLeft ? null : monsters[nextMonsterIndex]
+            }
+          });
+        }, 1500)
       },
       declareDefeat() {
         const monster = monsters[this.currentMonster];

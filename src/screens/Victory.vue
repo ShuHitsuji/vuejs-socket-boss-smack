@@ -26,8 +26,6 @@
 
     <footer class="footer">
       <div class="footer-content">
-        
-
         <nav class="start">
           <button class="start-button">
             <i class="arrow left" v-on:click="nextCombat()"></i>
@@ -146,7 +144,7 @@
   .footer-content {
     width: 700px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
 
