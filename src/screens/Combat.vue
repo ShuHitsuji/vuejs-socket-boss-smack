@@ -12,10 +12,10 @@
         </div>
         <div class="column right">
           <div class="character">
-            <Hero :instance="heroes[1]" :selected="isSelected(1)"/>
+            <Hero v-if="heroes.length >= 2" :instance="heroes[1]" :selected="isSelected(1)"/>
           </div>
           <div class="character">
-            <Hero :instance="heroes[2]" :selected="isSelected(2)"/>
+            <Hero v-if="heroes.length >= 3" :instance="heroes[2]" :selected="isSelected(2)"/>
           </div>
         </div>
       </div>
