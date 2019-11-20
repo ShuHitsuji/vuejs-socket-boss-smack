@@ -111,8 +111,8 @@
           })
         })
 
-        if (selection.length < 3) {
-          this.setCurrentInfo("Selecciona al menos 3 personajes, arrastrando y soltando los puntos.", "Olvidaste algo...");
+        if (selection.length === 0) {
+          this.setCurrentInfo("Selecciona al menos 1 personaje, arrastrando y soltando los puntos.", "Olvidaste algo...");
         } else {
           const heroes = selection.map((type) => createHero({type}))
           router.push({name: 'combat', params: { heroes }})
