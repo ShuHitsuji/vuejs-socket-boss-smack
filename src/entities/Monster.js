@@ -55,7 +55,10 @@ class Monster {
   }
 
   chooseRandomVictim(heroes) {
-    const index = Math.max(Math.floor(Math.random() * 3));
+    const min = 0;
+    const max = heroes.length - 1;
+    const index = getRandomValue(min, max)
+
     return (heroes[index].isAlive()) ? heroes[index] : this.chooseRandomVictim(heroes)
   }
 }

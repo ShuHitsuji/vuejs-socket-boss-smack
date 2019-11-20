@@ -1,5 +1,5 @@
 function getRandomValue(min, max) {
-  return Math.max(Math.floor(Math.random() * max) + 1, min);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export {
