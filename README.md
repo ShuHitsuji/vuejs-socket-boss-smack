@@ -1,6 +1,7 @@
-# vuejs-socket-boss-smack
+# Boss smack
+It's a RPG game where you struggle against elite monsters. Fight straight with the bosses.
 
-RPG game where you struggle against elite monsters. Fight straight with the bosses.
+Written with Vue.js
 
 ## Demo
 Play it online:
