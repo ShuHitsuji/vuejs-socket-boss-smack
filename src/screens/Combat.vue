@@ -223,8 +223,6 @@
         return false;
       },
       declareVictory() {
-        this.resetHeroes();
-
         const monster = this.getCurrentMonster();
         monster.setStatus('death');
 
