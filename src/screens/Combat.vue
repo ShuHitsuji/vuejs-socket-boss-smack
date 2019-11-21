@@ -193,9 +193,12 @@
           if(!monster.isAlive()) 
             return false;
             
-          const {monsterDamage, target} = monster.attackRandomHero(this.heroes);
-
-          this.lastAction = `${monster.name} dealt ${monsterDamage} damage to ${target.name}`;
+          const {monsterDamage, target, dealedDamage} = monster.attackRandomHero(this.heroes);
+          if(dealedDamage == 0){
+            this.lastAction = `${target.name} dodge the ${monster.name} attack`;
+          }else{
+            this.lastAction = `${monster.name} dealt ${monsterDamage} damage to ${target.name}`;
+          }
           this.isMonsterTurn = false;
           this.nextTurn();
         }, 1500)

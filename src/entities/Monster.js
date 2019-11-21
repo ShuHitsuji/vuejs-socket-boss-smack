@@ -52,11 +52,12 @@ class Monster {
     let target = this.chooseRandomVictim(heroes);
     let monsterDamage = getRandomValue(this.attack, this.attack * 2);
 
-    target.receiveDamage(monsterDamage);
+    let dealedDamage = target.receiveDamage(monsterDamage);
 
     return {
       monsterDamage,
-      target
+      target,
+      dealedDamage
     }
   }
 

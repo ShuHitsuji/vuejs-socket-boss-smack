@@ -1,4 +1,5 @@
 import Hero from "../Hero.js"
+import {getRandomValue} from "../../utils/numbers";
 
 class Ranger extends Hero {
   img = {
@@ -17,10 +18,25 @@ class Ranger extends Hero {
     super({
       name,
       type,
-      health: 175,
+      health: 125,
       attack: 60,
       mana: 100
     });
+  }
+
+  receiveDamage(amount) {
+    let chanceOfDodge = getRandomValue(0,10)
+    if(chanceOfDodge > 3){
+        this.health.current -= amount;
+    }else{
+        amount = 0;
+    }
+    
+    if (!this.isAlive()) {
+      this.setStatus('death');
+      this.health.current = 0;
+    }
+    return amount;
   }
 }
 

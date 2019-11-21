@@ -35,6 +35,7 @@ class Hero {
       this.health.current = 0;
       this.setStatus('death');
     }
+    return amount;
   }
 
   attackMonster(monster) {

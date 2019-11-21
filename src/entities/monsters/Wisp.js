@@ -26,7 +26,6 @@ class Wisp extends Monster{
         }else{
             amount = 0;
         }
-        
     
         if (!this.isAlive()) {
           this.setStatus('death');
