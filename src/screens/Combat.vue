@@ -237,6 +237,7 @@
             params: {
               heroes: this.heroes,
               monster,
+              monsters: this.monsters,
               nextMonster: noMonstersLeft ? null : monsters[nextMonsterIndex]
             }
           });
@@ -250,7 +251,8 @@
             name: 'defeat',
             params: {
               heroes: this.heroes,
-              monster
+              monster,
+              monsters: this.monsters
             }
           });
         }, 1500)

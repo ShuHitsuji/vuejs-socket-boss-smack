@@ -62,16 +62,24 @@
       }
     },
      created: function () {
-      const {heroes, monster} = this.$route.params;
+      const {heroes, monster, monsters} = this.$route.params;
 
       this.heroes = heroes || defaultHeroes;
       this.monster = monster || defaultMonster;
+      this.monsters = monsters;
+
     },
     methods: {
       newGame() {
+        this.resetMonsters()
         router.push({
           name: 'characters-selection'
         })
+      },
+      resetMonsters(){
+        for (let monster of this.monsters) {
+          monster.reset();
+        }
       }
     },
     components: {
