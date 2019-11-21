@@ -44,11 +44,11 @@ class Hero {
     }, 500)
 
     let playerDamage = getRandomValue(this.attack / 2, this.attack);
-    monster.receiveDamage(playerDamage);
+    let realDamage = monster.receiveDamage(playerDamage);
 
     this.regenerateMana()
 
-    return playerDamage;
+    return realDamage;
   }
 
   heal(){
@@ -87,9 +87,9 @@ class Hero {
 
     this.mana.current -= manaCost;
     let playerDamage = getRandomValue(this.attack, this.attack * 1.5);
-    monster.receiveDamage(playerDamage);
+    let realDamage = monster.receiveDamage(playerDamage);
 
-    return playerDamage;
+    return realDamage;
   }
 
   regenerateMana() {

@@ -41,6 +41,7 @@ class Monster {
       this.setStatus('death');
       this.health.current = 0;
     }
+    return amount;
   }
 
   attackRandomHero(heroes) {

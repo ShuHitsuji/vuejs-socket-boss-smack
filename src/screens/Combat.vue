@@ -110,8 +110,11 @@
         const monster = this.getCurrentMonster();
 
         const playerDamage = player.attackMonster(monster)
-
-        this.lastAction = `${player.name} dealt ${playerDamage} damage to ${monster.name}`;
+        if(playerDamage == 0){
+          this.lastAction = `${monster.name} dodge the ${player.name} attack`;
+        }else{
+           this.lastAction = `${player.name} dealt ${playerDamage} damage to ${monster.name}`;
+        }
 
         if (!this.isGameOver()) {
           this.monsterAttacks();
@@ -139,7 +142,11 @@
 
           let playerDamage = player.doSomethingSpecialToMonster(monster)
 
-          this.lastAction = `${player.name} dealt ${playerDamage} damage to ${monster.name}`;
+          if(playerDamage == 0){
+            this.lastAction = `${monster.name} dodge the ${player.name} attack`;
+          }else{
+            this.lastAction = `${player.name} dealt ${playerDamage} damage to ${monster.name}`;
+          }
 
           if (!this.isGameOver()) {
             this.monsterAttacks();
