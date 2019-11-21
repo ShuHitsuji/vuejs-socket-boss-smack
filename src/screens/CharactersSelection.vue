@@ -41,7 +41,7 @@
         <div class="info" v-html="info"/>
       </main>
       <nav class="start">
-        <button class="start-button">
+        <button class="start-button" :disabled="hasStarted">
           <i class="arrow left" v-on:click="startCombat()"></i>
         </button>
       </nav>
@@ -68,6 +68,7 @@
       tutorial += 'Click sobre un personaje para ver su descripción.';
 
       return {
+        hasStarted: false,
         heroes,
         selectedHero: null,
         draggables: [1, 2, 3], // player numbers
@@ -104,6 +105,9 @@
         this.info = title + info
       },
       startCombat() {
+        if(this.hasStarted)
+          return false;
+
         const selection = []
         Object.entries(this.droppables).forEach(([type, marks]) => {
           marks.forEach(() => {
@@ -114,6 +118,7 @@
         if (selection.length === 0) {
           this.setCurrentInfo("Selecciona al menos 1 personaje, arrastrando y soltando los puntos.", "Olvidaste algo...");
         } else {
+          this.hasStarted = true;
           const heroes = selection.map((type) => createHero({type}))
           router.push({name: 'combat', params: { heroes }})
         }
