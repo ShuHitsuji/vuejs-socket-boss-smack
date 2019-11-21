@@ -19,7 +19,7 @@ class Ranger extends Hero {
       name,
       type,
       health: 125,
-      attack: 60,
+      attack: 65,
       mana: 100
     });
   }
