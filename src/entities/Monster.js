@@ -29,6 +29,11 @@ class Monster {
     return this.img[this.status];
   }
 
+  reset() {
+    this.setStatus('idle');
+    this.health.current = this.health.max;
+  }
+
   receiveDamage(amount) {
     this.health.current -= amount;
 

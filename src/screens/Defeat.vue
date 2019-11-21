@@ -57,12 +57,13 @@
     },
     methods: {
       newGame() {
+        this.monster.reset();
         router.push({
           name: 'characters-selection'
         })
       },
       retry() {
-        this.monster.health.current = this.monster.health.max;
+        this.monster.reset();
         router.push({
           name: 'combat', params: {
             heroes: this.heroes,
