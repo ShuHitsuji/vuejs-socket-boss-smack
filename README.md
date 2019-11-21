@@ -1,29 +1,18 @@
 # vuejs-socket-boss-smack
 
+RPG game where you struggle against elite monsters. Fight straight with the bosses.
+
+## Demo
+Play it online:
+
+https://shuhitsuji.github.io/vuejs-socket-boss-smack/#/
+
 ## Project setup
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+npm run serve
 ```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
