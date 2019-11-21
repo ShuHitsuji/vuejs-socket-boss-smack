@@ -183,6 +183,9 @@
         const monster = this.getCurrentMonster();
 
         setTimeout(() => {
+          if(!monster.isAlive()) 
+            return false;
+            
           const {monsterDamage, target} = monster.attackRandomHero(this.heroes);
 
           this.lastAction = `${monster.name} dealt ${monsterDamage} damage to ${target.name}`;
@@ -209,9 +212,11 @@
         const isEverybodyDead = !this.isPartyAlive();
 
         if (isMonsterDead) {
+          this.isMonsterTurn = true;
           this.declareVictory();
           return true;
         } else if (isEverybodyDead) {
+          this.isMonsterTurn = true;
           this.declareDefeat();
           return true;
         }
