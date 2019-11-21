@@ -151,27 +151,8 @@
   .footer-content {
     width: 700px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-  }
-
-  .start-button {
-    display: block;
-    width: 100px;
-    height: 100px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    top: 16px;
-  }
-
-  .actions {
-    display: flex;
-    width: 400px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 10px;
   }
 
   .button {
@@ -188,7 +169,4 @@
   .button:hover {
     color: #bfb8b9;
   }
-
-  
-
 </style>
