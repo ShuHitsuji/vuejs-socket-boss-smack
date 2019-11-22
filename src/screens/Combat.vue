@@ -196,6 +196,8 @@
           const {monsterDamage, target, dealedDamage} = monster.attackRandomHero(this.heroes);
           if(dealedDamage == 0){
             this.lastAction = `${target.name} dodge the ${monster.name} attack`;
+          }else if(monsterDamage !== dealedDamage ){
+            this.lastAction = `${target.name} block ${monster.name} attack and received ${dealedDamage} damage`;
           }else{
             this.lastAction = `${monster.name} dealt ${monsterDamage} damage to ${target.name}`;
           }

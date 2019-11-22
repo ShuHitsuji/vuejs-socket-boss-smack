@@ -20,9 +20,10 @@ class Wisp extends Monster{
     }
 
     receiveDamage(amount) {
+
         let chanceOfDodge = getRandomValue(0,10)
         if(chanceOfDodge > 5){
-            this.health.current -= amount;
+            this.health.current -= Math.floor(amount);
         }else{
             amount = 0;
         }
@@ -31,7 +32,7 @@ class Wisp extends Monster{
           this.setStatus('death');
           this.health.current = 0;
         }
-        return amount;
+        return Math.floor(amount);
       }
 }
 

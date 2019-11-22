@@ -1,4 +1,5 @@
 import Hero from "../Hero.js"
+import {getRandomValue} from "../../utils/numbers";
 
 class Knight extends Hero {
   img = {
@@ -21,6 +22,23 @@ class Knight extends Hero {
       attack: 40,
       mana: 100,
     });
+  }
+
+  receiveDamage(amount) {
+    let chanceOfBlock = getRandomValue(0,10)
+    let receivedDamage = amount;
+    if(chanceOfBlock > 4){
+        this.health.current -=  Math.floor(receivedDamage);
+    }else{
+      receivedDamage = Math.floor(amount / 2);
+      this.health.current -= receivedDamage;
+    }
+    
+    if (!this.isAlive()) {
+      this.setStatus('death');
+      this.health.current = 0;
+    }
+    return receivedDamage;
   }
 }
 

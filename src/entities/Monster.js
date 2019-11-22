@@ -35,13 +35,14 @@ class Monster {
   }
 
   receiveDamage(amount) {
-    this.health.current -= amount;
+    let realAmount = Math.floor(amount);
+    this.health.current -= realAmount;
 
     if (!this.isAlive()) {
       this.setStatus('death');
       this.health.current = 0;
     }
-    return amount;
+    return realAmount;
   }
 
   attackRandomHero(heroes) {
