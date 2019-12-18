@@ -1,4 +1,5 @@
 import Hero from "../Hero.js"
+import {getRandomValue} from "../../utils/numbers";
 
 class Mage extends Hero {
   img = {
@@ -21,6 +22,31 @@ class Mage extends Hero {
       attack: 80,
       mana: 100
     });
+  }
+
+  heal(heroes){
+    let manaCost = 20;
+    let calculateHealing = "the whole team";
+    let minHeal = Math.round((this.health.max * 0.1) + (this.attack / 4));
+    let maxHeal = Math.round((this.health.max * 0.25) + (this.attack / 4));
+    let playerHeal = getRandomValue(minHeal, maxHeal);
+    this.mana.current -= manaCost;
+    for(let hero of heroes){
+      hero.setStatus('heal');
+      setTimeout(() => {
+        hero.setStatus('idle');
+      }, 800)
+      if(hero.health.current > 0){
+        if (hero.health.current + playerHeal > this.health.max) {
+          hero.health.current = hero.health.max;
+        } else {
+          hero.health.current += playerHeal;
+        }
+      }else{
+        hero.health.current = 1;
+      }
+    }
+    return calculateHealing;
   }
 }
 

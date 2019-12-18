@@ -52,7 +52,7 @@ class Hero {
     return realDamage;
   }
 
-  heal(){
+  heal(heroes){
     let manaCost = 20;
     let calculateHealing = 0;
 
@@ -62,7 +62,7 @@ class Hero {
     }, 800)
 
     this.mana.current -= manaCost;
-    let minHeal = Math.round((this.health.max * 0.1));
+    let minHeal = Math.round((this.health.max * 0.1) + (this.attack / 4));
     let maxHeal = Math.round((this.health.max * 0.25) + (this.attack / 4));
 
     let playerHeal = getRandomValue(minHeal, maxHeal);
@@ -75,7 +75,7 @@ class Hero {
       calculateHealing = playerHeal;
     }
 
-    return calculateHealing;
+    return calculateHealing + " hp";
   }
 
   doSomethingSpecialToMonster(monster) {

@@ -47,8 +47,8 @@ class Monster {
 
   attackRandomHero(heroes) {
     this.setStatus('attack');
-    setTimeout(() => {
-      this.setStatus('idle');
+    setTimeout(() => { 
+      this.isAlive() ? this.setStatus('idle') : this.setStatus('death');
     }, 800)
     let target = this.chooseRandomVictim(heroes);
     let monsterDamage = getRandomValue(this.attack, this.attack * 2);

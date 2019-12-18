@@ -125,9 +125,9 @@
         if (this.checkMana(manaCost)) {
           const player = this.getCurrentPlayer();
 
-          const playerHeal = player.heal();
+          const playerHeal = player.heal(this.heroes);
 
-          this.lastAction = `${player.name} heals ${playerHeal} hp`
+          this.lastAction = `${player.name} heals ${playerHeal}`
 
           if (!this.isGameOver()) {
             this.monsterAttacks();
