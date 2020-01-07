@@ -19,7 +19,7 @@ class Knight extends Hero {
       name,
       type,
       health: 250,
-      attack: 40,
+      attack: 45,
       mana: 100,
     });
   }

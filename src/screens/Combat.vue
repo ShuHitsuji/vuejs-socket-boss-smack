@@ -66,6 +66,7 @@
     createMonster({type: 'wisp'}),
     createMonster({type: 'slime'}),
     createMonster({type: 'fish'}),
+    createMonster({type: 'wall'}),
     createMonster({type: 'tv'})
   ]
 

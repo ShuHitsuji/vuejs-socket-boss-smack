@@ -13,7 +13,7 @@ class TheHand extends Monster{
         super({
             name: 'The hand',
             health: 999,
-            attack: 35,
+            attack: 45,
             type: 'tv'
         })
     }

@@ -14,6 +14,6 @@ git add -A
 git commit -m 'deploy'
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:ShuHitsuji/vuejs-socket-boss-smack.git master:gh-pages
+git push -f https://github.com/ShuHitsuji/vuejs-socket-boss-smack.git master:gh-pages
 
 cd -

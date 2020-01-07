@@ -185,9 +185,9 @@
   .selector {
     background: #9fa7ad;
     border-radius: 50%;
-    height: 15px;
-    width: 15px;
-    margin: 15px;
+    height: 20px;
+    width: 20px;
+    margin: 20px;
   }
 
   .footer {

@@ -13,7 +13,7 @@ class Wisp extends Monster{
     constructor() {
         super({
             name: 'Wisp',
-            health: 150,
+            health: 175,
             attack: 45,
             type: 'wisp'
         })
@@ -22,7 +22,7 @@ class Wisp extends Monster{
     receiveDamage(amount) {
 
         let chanceOfDodge = getRandomValue(0,10)
-        if(chanceOfDodge > 5){
+        if(chanceOfDodge > 7){
             this.health.current -= Math.floor(amount);
         }else{
             amount = 0;

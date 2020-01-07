@@ -59,6 +59,10 @@
     width:128px;
     height:128px;
   }
+  .wall{
+    width:132px;
+    height:132px;
+  }
 
   .arrow {
     width: 0px;

@@ -13,7 +13,7 @@ class Slime extends Monster{
         super({
             name: 'Badass Slime',
             health: 525,
-            attack: 25,
+            attack: 35,
             type: 'slime'
         })
     }

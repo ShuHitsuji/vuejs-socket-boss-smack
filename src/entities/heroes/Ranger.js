@@ -20,13 +20,13 @@ class Ranger extends Hero {
       type,
       health: 125,
       attack: 65,
-      mana: 100
+      mana: 120
     });
   }
 
   receiveDamage(amount) {
     let chanceOfDodge = getRandomValue(0,10)
-    if(chanceOfDodge > 3){
+    if(chanceOfDodge > 4){
         this.health.current -= amount;
     }else{
         amount = 0;

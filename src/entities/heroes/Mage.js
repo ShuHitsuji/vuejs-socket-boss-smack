@@ -20,7 +20,7 @@ class Mage extends Hero {
       type,
       health: 150,
       attack: 80,
-      mana: 100
+      mana: 150
     });
   }
 
@@ -37,7 +37,7 @@ class Mage extends Hero {
         hero.setStatus('idle');
       }, 800)
       if(hero.health.current > 0){
-        if (hero.health.current + playerHeal > this.health.max) {
+        if (hero.health.current + playerHeal > hero.health.max) {
           hero.health.current = hero.health.max;
         } else {
           hero.health.current += playerHeal;
